@@ -82,5 +82,17 @@ Obiettivo utente: rendere gestibile dalla Cabina di Regia TUTTO il sito (contenu
   - `Navbar.jsx`: brand, tagline, logo (lettera/immagine), voci menu (label/visibilità/ordine).
   - `Layout.jsx` Footer: descrizione, 2 colonne (titolo+voci), contatti (telefono/WhatsApp/email/indirizzo), social, copyright.
   - `Hub.jsx`: render 100% dinamico delle 10 sezioni da `settings.home` (ordine + visibilità + tutti i testi, badge hero, immagine hero, card B&B, card network).
-- Editor Cabina nuovi: `HomeEditor` (Sezioni Home: reorder ↑↓, on/off, testi, liste, card), `LayoutSections` (Menu & Logo, Footer & Contatti). "Contenuti Sito" ripulito dai campi hero (ora in Sezioni Home).
-- Test: iteration_6.json — frontend 100%, persistenza E2E verificata su Home/Navbar/Footer; default ripristinati.
+- Editor Cabina nuovi: `HomeEditor` (Sezioni Home), `LayoutSections` (Menu & Logo, Footer & Contatti). "Contenuti Sito" ripulito dai campi hero.
+- Test: iteration_6.json — frontend 100%, persistenza E2E; default ripristinati.
+
+### FASE 3 — COMPLETATA (2026-10-18)
+- Integrazione Object Storage Emergent (EMERGENT_LLM_KEY): helper init/put/get con retry; `POST /api/admin/media` (upload, staff), `GET /api/admin/media`, `DELETE /api/admin/media/{id}` (soft-delete), `GET /api/media/{id}` (serve pubblico). init_storage() best-effort a startup.
+- Media Library in Cabina (`MediaSection`): upload reale, griglia, Copia URL, elimina. `MediaUpload` riusabile collegato a: form immobili (foto before/after), logo navbar, immagine hero, og:image SEO.
+- SEO: `settings.seo` (site_title, default_description, og_image, pages{home,immobili,servizi,chi_cerca}) + SEO per immobile (seo_title/seo_description). Componente `Seo` imposta document.title + meta description/og su Hub/Immobili/Servizi/ChiCerca/PropertyDetail.
+- Testi pagine editabili: `settings.pages` (immobili/servizi/chi_cerca) letti dalle rispettive pagine. Editor `PagesSeoSection` (testi + SEO globale e per pagina).
+- Quartieri & Poli CRUD completo: `POST/DELETE /api/admin/neighborhoods` e `/poles`; `RegionSection` con aggiungi/rinomina/elimina + ordine/posizione.
+- backend/.env: aggiunta EMERGENT_LLM_KEY. requests già in requirements.
+- Test: iteration_7.json — frontend 100% (5/5 feature), upload reale verificato (immagine servita da /api/media), persistenza E2E, artefatti ripuliti.
+
+## Cabina di Regia — pannelli attuali
+Aspetto & Tema | Sezioni Home | Menu & Logo | Footer & Contatti | Pagine & SEO | Libreria Media | Contenuti Sito | Ticker/Stat/Servizi/Bacheca | FAQ | Quartieri & Poli | Hype | Link VIP | Newsletter | Integrazioni | Utenti | Backup.

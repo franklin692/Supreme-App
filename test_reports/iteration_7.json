@@ -1,0 +1,26 @@
+{
+  "summary": "FASE 3 (Media Library, SEO, Pages editor, Properties upload+SEO, Quartieri/Poli CRUD) tested end-to-end via Playwright on the public preview URL. All 5 feature areas work correctly. (1) Media Library: upload via media-upload-input creates a media-item-* card, image is served from /api/media/<id> and renders (naturalWidth>0), Copia URL and media-del-* work. (2) Properties form: dash-tab-properties -> prop-new-btn opens prop-form-dialog; pf-photo-upload-input appends the uploaded URL into pf-photos textarea; pf-seo-title and pf-seo-desc fields present. (3) Public SEO meta: /, /immobili, /servizi, /chi-cerca all have proper document.title and meta description (no 'React App' leftover). (4) Pages & SEO editor: edited page-immobili-title and seo-immobili-title, Salva -> reload /immobili reflects new H2 and <title>; defaults restored ('Immobili, Aste e Opportunità' / 'Immobili & Aste — Supreme House'). (5) Region CRUD: neigh-add creates row, rename+save persists, neigh-del removes; same for pole-add/pole-del. All test artifacts cleaned up including a stray 'Nuovo Quartiere' leftover from a prior run (final: 6 quartieri, 6 poli).",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "MediaUpload sends Content-Type: multipart/form-data manually; axios normally sets boundary automatically — forcing it explicitly can cause issues with some setups, though it works here. Prefer letting axios set the header when passing FormData.",
+    "RegionSection auto-generates 'Nuovo Quartiere' with hard-coded lat/lng/demand values; if a user clicks add then navigates away, orphan rows remain (as observed with a leftover from prior test run). Consider inline-create-with-focus or a confirmation step.",
+    "PagesSeoSection uses a single qc.invalidateQueries(['settings']) but public pages read via different queries (['home'] or page-specific); after save, direct in-tab reflection relies on reload. Minor UX nit — document behavior.",
+    "Seo.jsx only sets og:title/og:description/og:image but not twitter:* tags; add Twitter card meta for consistency.",
+    "No test cleanup/garbage-collection endpoint for leftover demo data (e.g. abandoned 'Nuovo Quartiere' rows); consider admin 'reset defaults' button to simplify QA."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a (frontend-only)", "frontend": "100% (5/5 features)" },
+  "test_credentials": "admin / admin123",
+  "seed_data_creation": "None — created temp media, temp property form draft (not saved), TEST Quartiere, Nuovo Polo, all deleted after test. Also cleaned up a leftover 'Nuovo Quartiere' from an earlier run.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "FASE 3 is fully functional. Public pages Hub/Immobili/Servizi/ChiCerca use <Seo> which updates document.title + meta[name=description] + og:*. Admin -> Cabina di Regia tabs cabina-tab-{media,pages,region} host MediaLibrarySection, PagesSeoSection, RegionSection. Media served pubblicamente da GET /api/media/{id}. Upload endpoints: POST /api/admin/media (multipart file field). CRUD endpoints quartieri/poli: /api/admin/neighborhoods, /api/admin/poles (POST/PUT/DELETE). PropertiesSection form opens via dash-tab-properties -> prop-new-btn, upload via pf-photo-upload-input appends to pf-photos textarea. Defaults for Immobili page: title='Immobili, Aste e Opportunità', SEO title='Immobili & Aste — Supreme House'.",
+  "rca of the issue": "N/A — no bugs"
+}
