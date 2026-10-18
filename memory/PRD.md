@@ -97,7 +97,15 @@ Obiettivo utente: rendere gestibile dalla Cabina di Regia TUTTO il sito (contenu
 ## Cabina di Regia — pannelli attuali
 Aspetto & Tema | Sezioni Home | Menu & Logo | Footer & Contatti | Pagine & SEO | Libreria Media | Contenuti Sito | Ticker/Stat/Servizi/Bacheca | FAQ | Quartieri & Poli | Hype | Link VIP | Newsletter | Integrazioni | Utenti | Backup.
 
-### RESTYLING VISIVO — COMPLETATO (2026-10-18)
+### NAVIGAZIONE + PANORAMICA + RESTYLE (2026-10-18)
+- Ticker in alto RIMOSSO (da Layout).
+- Hero home ridisegnata a 2 colonne (testo + immagine incorniciata con chip advisor), più bilanciata e premium.
+- Bottom-nav mobile: Home · Immobili · Servizi · Profilo · **Menu** (drawer laterale shadcn Sheet con: link Esplora, Area personale/Accedi, contatti WhatsApp/telefono/email dai settings). Rimosso 'Accedi' dalla bottom-nav.
+- Cabina di Regia: nuova scheda **Panoramica** (default) con endpoint `GET /api/admin/overview` → lead totali/nuovi, immobili attivi/totali/conclusi, iscritti newsletter, richieste acquirenti (+ pending), ultime 6 richieste; card cliccabili verso le sezioni.
+- Deep-restyle: Servizi (card con indice numerico + hover), ServiceDetail (header a fascia scura premium), PropertyDetail (gallery arrotondata su desktop). Sistema grafico condiviso (index.css) + PropertyCard già rinnovati.
+- Test: iteration_10.json — frontend 16/16, nessun errore console, nessun overflow a 390px. Fix a11y: SheetTitle sr-only nel drawer.
+
+### RESTYLING VISIVO COMPONENTI CONDIVISI — COMPLETATO (2026-10-18)
 - Sistema grafico unificato in `index.css`: scala tipografica più leggibile (body 16px/1.6), contrasti migliorati (muted-foreground più scuro), ombre a più livelli su `.glass`/`.glass-gold`, bottoni premium (`.metallic` con sheen oro + ombra, `.btn-dark` con ombra), `::selection` oro. Tutto ancora guidato dalle variabili `--sh-*` (tema admin intatto).
 - `PropertyCard` ridisegnata (condivisa catalogo/home/ricerca): immagine 4:3 coerente senza deformazioni, overlay scuro leggibile, badge ordinati, chip RIF leggibile, pill views/shares/online con testo chiaro, riga meta mq/locali/bagni con icone, prezzo in evidenza (font-display), chip "Verificato". Coerente con dettaglio immobile (StatusBadge condiviso).
 - `SectionTitle` (sottotitolo text-lg neutral-600) e `StatusBadge` (shadow) raffinati.

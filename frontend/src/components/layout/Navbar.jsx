@@ -5,7 +5,7 @@ import { Landmark, Building2, Users, Zap, User, LayoutDashboard, Menu as MenuIco
 import { api, waLink } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 
 const ICONS = { "/": Landmark, "/immobili": Building2, "/chi-cerca": Users, "/servizi": Zap };
 
@@ -125,6 +125,7 @@ const SideMenu = ({ open, setOpen }) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetContent side="right" className="w-[86%] max-w-sm p-0 border-l border-gold/20 bg-[color:var(--sh-surface)]" data-testid="side-menu">
+        <SheetTitle className="sr-only">Menu laterale</SheetTitle>
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between px-5 py-4 border-b border-black/5">
             <div className="flex items-center gap-3">
