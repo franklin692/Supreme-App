@@ -21,22 +21,26 @@ export default function ServiceDetail() {
         <ArrowLeft size={16} /> Tutti i servizi
       </Link>
 
-      <div className="flex items-start gap-4 mb-8">
-        <div className="w-16 h-16 rounded-2xl metallic flex items-center justify-center shrink-0 gold-glow"><Icon size={28} /></div>
-        <div>
-          <span className="text-xs uppercase tracking-[0.3em] text-gold">Servizio Supreme House</span>
-          <h1 className="font-display text-3xl lg:text-4xl font-bold text-neutral-900 mt-1 leading-tight">{s.title}</h1>
+      <div className="relative rounded-3xl overflow-hidden bg-[color:var(--sh-ink)] p-7 lg:p-9 mb-8">
+        <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full blur-3xl" style={{ background: "color-mix(in srgb, var(--sh-gold) 22%, transparent)" }} />
+        <div className="relative flex items-start gap-4">
+          <div className="w-16 h-16 rounded-2xl metallic flex items-center justify-center shrink-0 gold-glow"><Icon size={28} /></div>
+          <div>
+            <span className="text-xs uppercase tracking-[0.3em] text-gold font-semibold">Servizio Supreme House</span>
+            <h1 className="font-display text-3xl lg:text-4xl font-bold text-white mt-1.5 leading-tight">{s.title}</h1>
+            {s.short && <p className="text-white/70 mt-2 max-w-xl leading-relaxed">{s.short}</p>}
+          </div>
         </div>
       </div>
 
-      <div className="glass-gold rounded-2xl p-7 mb-8">
-        <p className="text-neutral-700 leading-relaxed text-base">{s.full}</p>
+      <div className="glass-gold rounded-2xl p-7 mb-6">
+        <p className="text-neutral-700 leading-relaxed text-base lg:text-lg">{s.full}</p>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4 mb-8">
         {["Interlocutore unico", "Massima riservatezza", "Dati Osservatorio reali"].map((v) => (
-          <div key={v} className="glass rounded-xl p-4 flex items-center gap-2 text-sm text-neutral-700">
-            <CheckCircle2 size={16} className="text-emerald shrink-0" /> {v}
+          <div key={v} className="glass rounded-xl p-4 flex items-center gap-2.5 text-sm font-medium text-neutral-700">
+            <CheckCircle2 size={17} className="text-emerald shrink-0" /> {v}
           </div>
         ))}
       </div>

@@ -46,8 +46,8 @@ export default function PropertyDetail() {
     <div className="pb-28">
       <Seo title={p.seo_title || `${p.title} — Supreme House`} description={p.seo_description || p.advisor_note || `${p.title} a ${p.neighborhood || ""}, ${p.city || "Basilicata"}.`} image={p.photos?.[0]} />
       {/* Gallery */}
-      <div className="relative">
-        <div className="relative h-72 sm:h-[460px] overflow-hidden">
+      <div className="relative lg:max-w-6xl lg:mx-auto lg:px-8 lg:pt-6">
+        <div className="relative h-72 sm:h-[460px] overflow-hidden lg:rounded-3xl">
           <img src={p.photos?.[active]} alt={p.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
           <div className="absolute top-4 left-4 flex flex-col gap-2 max-w-[80%]">

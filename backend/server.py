@@ -720,6 +720,26 @@ async def delete_config(cid: str, user: dict = Depends(require_admin)):
     return {"ok": True}
 
 
+# ----------------------------- Admin: Overview dashboard -----------------------------
+@api.get("/admin/overview")
+async def admin_overview(user: dict = Depends(require_staff)):
+    leads_total = await db.leads.count_documents({})
+    leads_new = await db.leads.count_documents({"status": {"$in": ["new", "nuovo", "aperto", None]}})
+    props_active = await db.properties.count_documents({"type": {"$ne": "conclusa"}})
+    props_total = await db.properties.count_documents({})
+    props_concluded = await db.properties.count_documents({"type": "conclusa"})
+    newsletter = await db.newsletter.count_documents({})
+    buyers = await db.buyer_requests.count_documents({})
+    buyers_pending = await db.buyer_requests.count_documents({"approved": {"$ne": True}})
+    recent = await db.leads.find({}, {"_id": 0}).sort("created_at", -1).to_list(6)
+    return {
+        "leads_total": leads_total, "leads_new": leads_new,
+        "properties_active": props_active, "properties_total": props_total, "properties_concluded": props_concluded,
+        "newsletter": newsletter, "buyer_requests": buyers, "buyer_requests_pending": buyers_pending,
+        "recent_leads": recent,
+    }
+
+
 # ----------------------------- Object Storage (media uploads) -----------------------------
 STORAGE_BASE = (os.environ.get("INTEGRATION_PROXY_URL") or "").strip() or "https://integrations.emergentagent.com"
 STORAGE_URL = STORAGE_BASE.rstrip("/") + "/objstore/api/v1/storage"

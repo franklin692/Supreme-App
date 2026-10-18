@@ -3,7 +3,6 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Instagram, Facebook, Linkedin, Youtube, Twitter, Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { api, waLink } from "@/lib/api";
-import { Ticker } from "@/components/layout/Ticker";
 import { TopNav, BottomNav } from "@/components/layout/Navbar";
 import { NewsletterSignup } from "@/components/common/NewsletterSignup";
 
@@ -11,7 +10,6 @@ export const Layout = () => {
   const { pathname } = useLocation();
   return (
     <div className="min-h-screen flex flex-col">
-      <Ticker />
       <TopNav />
       <main key={pathname} className="flex-1 pb-24 lg:pb-0 fade-up">
         <Outlet />

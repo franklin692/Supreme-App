@@ -56,42 +56,59 @@ export default function Hub() {
 /* ====================== SECTION COMPONENTS ====================== */
 
 const Hero = ({ s }) => (
-  <section className="relative min-h-[88vh] flex items-center" data-testid="home-section-hero">
-    <div className="absolute inset-0 -z-10">
-      {s.image && <img src={s.image} alt="" className="absolute inset-0 w-full h-full object-cover opacity-10" />}
-      <div className="absolute inset-0" style={{ background: "radial-gradient(1100px circle at 82% 0%, rgba(190,158,94,0.18), transparent 48%)" }} />
-    </div>
-    <div className="relative max-w-7xl mx-auto px-5 lg:px-8 w-full py-20">
-      <div className="max-w-3xl">
-        <div className="flex items-center gap-2 mb-6">
-          <span className="h-px w-10 bg-gold" />
-          <span className="text-xs uppercase tracking-[0.3em] text-gold">{s.eyebrow}</span>
+  <section className="relative overflow-hidden" data-testid="home-section-hero">
+    <div className="absolute inset-0 -z-10" style={{ background: "radial-gradient(1100px circle at 85% 10%, color-mix(in srgb, var(--sh-gold) 14%, transparent), transparent 55%)" }} />
+    <div className="max-w-7xl mx-auto px-5 lg:px-8 py-14 lg:py-20">
+      <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        {/* Text */}
+        <div>
+          <div className="flex items-center gap-2 mb-5">
+            <span className="h-px w-10 bg-gold" />
+            <span className="text-xs uppercase tracking-[0.3em] text-gold font-semibold">{s.eyebrow}</span>
+          </div>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.04] text-neutral-900">
+            {s.title}{" "}<span className="text-gold-gradient">{s.title_accent}</span>
+          </h1>
+          <div className="mt-6 inline-flex flex-col rounded-2xl bg-[color:var(--sh-ink)] px-6 py-4">
+            <span className="text-white/65 font-medium tracking-[0.12em] text-[11px] uppercase">{s.card_top}</span>
+            <span className="font-display text-xl sm:text-2xl text-gold-gradient mt-0.5">{s.card_bottom}</span>
+          </div>
+          <p className="mt-6 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-xl">{s.subtitle}</p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3.5">
+            <PrivateAdvisorDialog
+              trigger={
+                <button data-testid="hero-advisor-btn" className="px-7 py-4 rounded-full metallic font-semibold text-base flex items-center justify-center gap-2">
+                  <Sparkles size={18} /> {s.cta_primary || "Prenota un Private Advisor"}
+                </button>
+              }
+            />
+            <Link to="/immobili" data-testid="hero-immobili-btn" className="px-7 py-4 rounded-full border border-gold/40 text-gold hover:bg-gold/10 transition-colors duration-300 font-semibold flex items-center justify-center gap-2">
+              {s.cta_secondary || "Esplora gli Immobili"} <ArrowRight size={18} />
+            </Link>
+          </div>
+          {(s.trust_badges || []).length > 0 && (
+            <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm text-neutral-600">
+              {s.trust_badges.map((b, i) => (
+                <span key={i} className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald" /> {b}</span>
+              ))}
+            </div>
+          )}
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.02] text-neutral-900">
-          {s.title}{" "}<span className="text-gold-gradient">{s.title_accent}</span>
-        </h1>
-        <div className="mt-8 inline-block rounded-2xl bg-[#16150F] px-7 py-5">
-          <div className="text-white/70 font-medium tracking-[0.12em] text-xs uppercase">{s.card_top}</div>
-          <div className="font-display text-2xl sm:text-3xl text-gold-gradient mt-1">{s.card_bottom}</div>
-        </div>
-        <p className="mt-6 text-lg text-neutral-600 leading-relaxed max-w-2xl">{s.subtitle}</p>
-        <div className="mt-9 flex flex-col sm:flex-row gap-4">
-          <PrivateAdvisorDialog
-            trigger={
-              <button data-testid="hero-advisor-btn" className="px-8 py-4 rounded-full metallic font-semibold text-base hover:brightness-110 transition-all duration-300 flex items-center justify-center gap-2 gold-glow">
-                <Sparkles size={18} /> {s.cta_primary || "Prenota un Private Advisor"}
-              </button>
-            }
-          />
-          <Link to="/immobili" data-testid="hero-immobili-btn" className="px-8 py-4 rounded-full border border-gold/40 text-gold hover:bg-gold/10 transition-colors duration-300 font-medium flex items-center justify-center gap-2">
-            {s.cta_secondary || "Esplora gli Immobili"} <ArrowRight size={18} />
-          </Link>
-        </div>
-        {(s.trust_badges || []).length > 0 && (
-          <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
-            {s.trust_badges.map((b, i) => (
-              <span key={i} className="flex items-center gap-2"><CheckCircle2 size={15} className="text-emerald" /> {b}</span>
-            ))}
+
+        {/* Image */}
+        {s.image && (
+          <div className="relative">
+            <div className="relative rounded-3xl overflow-hidden gold-glow aspect-[4/5] sm:aspect-[16/11] lg:aspect-[4/5]">
+              <img src={s.image} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 glass rounded-2xl px-4 py-3 flex items-center gap-3 backdrop-blur-md" style={{ background: "color-mix(in srgb, var(--sh-surface) 86%, transparent)" }}>
+                <div className="w-10 h-10 rounded-xl metallic flex items-center justify-center shrink-0"><Sparkles size={18} /></div>
+                <div className="leading-tight">
+                  <div className="text-sm font-semibold text-neutral-900">Advisor a domicilio in 24h</div>
+                  <div className="text-xs text-neutral-500">In tutta la Basilicata</div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>

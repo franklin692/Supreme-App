@@ -15,11 +15,13 @@ import { HomeEditorSection } from "@/components/dashboard/HomeEditor";
 import { NavbarSection, FooterSection } from "@/components/dashboard/LayoutSections";
 import { MediaLibrarySection } from "@/components/dashboard/MediaSection";
 import { PagesSeoSection } from "@/components/dashboard/PagesSeoSection";
+import { DashboardSection } from "@/components/dashboard/DashboardSection";
+import { Gauge } from "lucide-react";
 
 export default function CabinaRegia() {
   const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
-  const [active, setActive] = useState("settings");
+  const [active, setActive] = useState("dashboard");
 
   useEffect(() => {
     if (!loading && (!user || user.role !== "admin")) navigate("/accedi");
@@ -28,6 +30,9 @@ export default function CabinaRegia() {
   if (loading || !user) return <div className="py-20 text-center text-neutral-500">Caricamento Cabina di Regia...</div>;
 
   const groups = [
+    { title: "Generale", items: [
+      { id: "dashboard", label: "Panoramica", icon: Gauge },
+    ]},
     { title: "Aspetto & Tema", items: [
       { id: "theme", label: "Aspetto & Tema", icon: Palette },
     ]},
@@ -55,6 +60,7 @@ export default function CabinaRegia() {
   ];
 
   const Section = {
+    dashboard: DashboardSection,
     theme: ThemeSection,
     home: HomeEditorSection, navbar: NavbarSection, footer: FooterSection,
     pages: PagesSeoSection, media: MediaLibrarySection,
@@ -95,7 +101,7 @@ export default function CabinaRegia() {
             </div>
           ))}
         </aside>
-        <main className="min-w-0 glass rounded-3xl p-5 lg:p-7"><Section /></main>
+        <main className="min-w-0 glass rounded-3xl p-5 lg:p-7"><Section onNavigate={setActive} /></main>
       </div>
     </div>
   );
