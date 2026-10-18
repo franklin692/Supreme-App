@@ -59,13 +59,13 @@ export const PrivateAdvisorDialog = ({ trigger }) => {
                 return (
                   <button key={o.id} type="button" data-testid={`advisor-opt-${o.id}`} onClick={() => setSel(o.id)}
                     className={cn("w-full text-left p-4 rounded-xl border transition-all duration-300 flex gap-3",
-                      active ? "border-gold bg-gold/10" : "border-white/10 hover:border-gold/40 bg-night/50")}>
-                    <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center shrink-0", active ? "metallic" : "bg-night border border-gold/20 text-gold")}>
+                      active ? "border-gold bg-gold/10" : "border-black/10 hover:border-gold/40 bg-neutral-50")}>
+                    <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center shrink-0", active ? "metallic" : "bg-neutral-100 border border-gold/20 text-gold")}>
                       <Icon size={18} />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-white text-sm">{o.title}</span>
+                        <span className="font-semibold text-neutral-900 text-sm">{o.title}</span>
                         {o.tag && <span className="text-[10px] metallic px-2 py-0.5 rounded-full">{o.tag}</span>}
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{o.desc}</p>
@@ -77,9 +77,9 @@ export const PrivateAdvisorDialog = ({ trigger }) => {
             </div>
             <div className="space-y-3 mt-3">
               <Input data-testid="advisor-name" placeholder="Nome e Cognome" value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                onChange={(e) => setForm({ ...form, name: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
               <Input data-testid="advisor-phone" placeholder="Numero WhatsApp" value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                onChange={(e) => setForm({ ...form, phone: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
               <TimeSlotPicker value={slot} onChange={setSlot} testidPrefix="advisor-slot" />
               <button onClick={submit} disabled={loading} data-testid="advisor-submit"
                 className="w-full py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all duration-300 disabled:opacity-60">
@@ -91,7 +91,7 @@ export const PrivateAdvisorDialog = ({ trigger }) => {
           <div className="py-8 text-center" data-testid="advisor-success">
             <CheckCircle2 size={56} className="text-emerald mx-auto mb-4" />
             <h3 className="font-display text-2xl text-gold-gradient mb-2">Prenotazione ricevuta</h3>
-            <p className="text-gray-300 text-sm px-4">Un Private Advisor Supreme House ti contatterà nella fascia oraria scelta.</p>
+            <p className="text-neutral-600 text-sm px-4">Un Private Advisor Supreme House ti contatterà nella fascia oraria scelta.</p>
             <button onClick={() => setOpen(false)} className="mt-6 px-6 py-2.5 rounded-full border border-gold/40 text-gold hover:bg-gold/10 transition-colors duration-300">Chiudi</button>
           </div>
         )}

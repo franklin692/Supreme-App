@@ -8,14 +8,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
-const inp = "bg-night/70 border-gold/20 focus-visible:ring-gold text-sm";
+const inp = "bg-white border-gold/20 focus-visible:ring-gold text-sm";
 
 export const SiteSection = () => {
   return (
     <div data-testid="section-site">
-      <div className="flex items-center gap-2 text-gold mb-5"><Settings2 size={20} /><h2 className="font-display text-2xl text-white">Gestione Totale Sito</h2></div>
+      <div className="flex items-center gap-2 text-gold mb-5"><Settings2 size={20} /><h2 className="font-display text-2xl text-neutral-900">Gestione Totale Sito</h2></div>
       <Tabs defaultValue="ticker">
-        <TabsList className="bg-night/70 border border-gold/20 flex-wrap h-auto">
+        <TabsList className="bg-white border border-gold/20 flex-wrap h-auto">
           <TabsTrigger value="ticker" data-testid="site-tab-ticker" className="data-[state=active]:bg-gold data-[state=active]:text-obsidian">Ticker & Statistiche</TabsTrigger>
           <TabsTrigger value="services" data-testid="site-tab-services" className="data-[state=active]:bg-gold data-[state=active]:text-obsidian">Servizi</TabsTrigger>
           <TabsTrigger value="bacheca" data-testid="site-tab-bacheca" className="data-[state=active]:bg-gold data-[state=active]:text-obsidian">Bacheca Chi Cerca</TabsTrigger>
@@ -51,14 +51,14 @@ const TickerStats = () => {
     <div className="space-y-6">
       <div className="glass-gold rounded-2xl p-5">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="font-display text-lg text-white">Barra Ticker Scorrevole (una voce per riga)</h3>
+          <h3 className="font-display text-lg text-neutral-900">Barra Ticker Scorrevole (una voce per riga)</h3>
           <button data-testid="ticker-save" onClick={saveTicker} className="flex items-center gap-1.5 px-4 py-2 rounded-full metallic text-sm font-semibold"><Save size={14} /> Salva Ticker</button>
         </div>
         <Textarea data-testid="ticker-textarea" value={items} onChange={(e) => setItems(e.target.value)} className={inp + " min-h-[140px] font-mono"} />
       </div>
 
       <div className="glass-gold rounded-2xl p-5">
-        <h3 className="font-display text-lg text-white mb-3">6 Contatori Statistiche del Gruppo</h3>
+        <h3 className="font-display text-lg text-neutral-900 mb-3">6 Contatori Statistiche del Gruppo</h3>
         <div className="grid sm:grid-cols-2 gap-3">
           {stats.map((s, i) => (
             <div key={s.id} className="glass rounded-xl p-3 flex items-end gap-2" data-testid={`stat-edit-${i}`}>
@@ -101,7 +101,7 @@ const ServicesManager = () => {
         {services.map((s) => (
           <div key={s.id} className="glass-gold rounded-xl p-4" data-testid={`service-manage-${s.id}`}>
             <div className="flex items-start justify-between gap-2">
-              <div><div className="font-semibold text-white text-sm">{s.title}</div><div className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{s.short}</div></div>
+              <div><div className="font-semibold text-neutral-900 text-sm">{s.title}</div><div className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{s.short}</div></div>
               <div className="flex items-center gap-2 shrink-0">
                 <Switch checked={s.active} onCheckedChange={() => toggle(s)} data-testid={`service-toggle-${s.id}`} />
                 <button onClick={() => setEditing(s)} className="text-gold text-xs">Modifica</button>
@@ -113,7 +113,7 @@ const ServicesManager = () => {
       </div>
       {editing && (
         <div className="glass-gold rounded-2xl p-5 mt-4" data-testid="service-editor">
-          <div className="flex items-center justify-between mb-3"><h3 className="font-display text-lg text-white">{editing.id ? "Modifica servizio" : "Nuovo servizio"}</h3><button onClick={() => setEditing(null)} className="text-muted-foreground"><X size={18} /></button></div>
+          <div className="flex items-center justify-between mb-3"><h3 className="font-display text-lg text-neutral-900">{editing.id ? "Modifica servizio" : "Nuovo servizio"}</h3><button onClick={() => setEditing(null)} className="text-muted-foreground"><X size={18} /></button></div>
           <div className="space-y-3">
             <Input placeholder="Icona lucide (es. Lock, Building2)" value={editing.icon} onChange={(e) => setEditing({ ...editing, icon: e.target.value })} className={inp} />
             <Input data-testid="service-title" placeholder="Titolo" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} className={inp} />
@@ -154,7 +154,7 @@ const BachecaManager = () => {
           <div key={r.id} className="glass-gold rounded-xl p-4 flex items-center justify-between gap-3" data-testid={`bacheca-item-${r.id}`}>
             <div className="min-w-0">
               <div className="text-xs font-mono text-gold">#{r.ref_code} {r.approved ? <span className="text-emerald">· Pubblicata</span> : <span className="text-amber">· In attesa</span>}</div>
-              <div className="font-semibold text-white text-sm">{r.profile}</div>
+              <div className="font-semibold text-neutral-900 text-sm">{r.profile}</div>
               <div className="text-xs text-muted-foreground truncate">{r.searching} · {r.zone} · {r.budget}</div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
@@ -167,13 +167,13 @@ const BachecaManager = () => {
       </div>
       {editing && (
         <div className="glass-gold rounded-2xl p-5 mt-4" data-testid="bacheca-editor">
-          <div className="flex items-center justify-between mb-3"><h3 className="font-display text-lg text-white">{editing.id ? "Modifica richiesta" : "Nuova richiesta"}</h3><button onClick={() => setEditing(null)} className="text-muted-foreground"><X size={18} /></button></div>
+          <div className="flex items-center justify-between mb-3"><h3 className="font-display text-lg text-neutral-900">{editing.id ? "Modifica richiesta" : "Nuova richiesta"}</h3><button onClick={() => setEditing(null)} className="text-muted-foreground"><X size={18} /></button></div>
           <div className="space-y-3">
             <Input placeholder="Profilo (es. Dirigente Medico)" value={editing.profile} onChange={(e) => setEditing({ ...editing, profile: e.target.value })} className={inp} />
             <Input data-testid="bacheca-searching" placeholder="Cosa cerca" value={editing.searching} onChange={(e) => setEditing({ ...editing, searching: e.target.value })} className={inp} />
             <Input placeholder="Zona" value={editing.zone} onChange={(e) => setEditing({ ...editing, zone: e.target.value })} className={inp} />
             <Input placeholder="Budget" value={editing.budget} onChange={(e) => setEditing({ ...editing, budget: e.target.value })} className={inp} />
-            <label className="flex items-center gap-2 text-sm text-gray-300"><Switch checked={editing.approved} onCheckedChange={(v) => setEditing({ ...editing, approved: v })} /> Pubblicata</label>
+            <label className="flex items-center gap-2 text-sm text-neutral-600"><Switch checked={editing.approved} onCheckedChange={(v) => setEditing({ ...editing, approved: v })} /> Pubblicata</label>
             <button data-testid="bacheca-save" onClick={save} className="w-full py-3 rounded-full metallic font-semibold">Salva richiesta</button>
           </div>
         </div>

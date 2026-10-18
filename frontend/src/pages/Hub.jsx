@@ -28,9 +28,8 @@ export default function Hub() {
     <div>
       {/* ===== A) HERO ===== */}
       <section className="relative min-h-[88vh] flex items-center">
-        <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="skyline" className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-obsidian/70 via-obsidian/85 to-obsidian" />
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0" style={{ background: "radial-gradient(1100px circle at 82% 0%, rgba(190,158,94,0.18), transparent 48%)" }} />
         </div>
         <div className="relative max-w-7xl mx-auto px-5 lg:px-8 w-full py-20">
           <div className="max-w-3xl">
@@ -38,11 +37,15 @@ export default function Hub() {
               <span className="h-px w-10 bg-gold" />
               <span className="text-xs uppercase tracking-[0.35em] text-gold">Private Banking del Real Estate</span>
             </div>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-white">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-neutral-900">
               Il tuo patrimonio immobiliare,<br />
               <span className="text-gold-gradient">gestito come un grande capitale.</span>
             </h1>
-            <p className="mt-6 text-lg text-gray-300 leading-relaxed max-w-2xl">
+            <div className="mt-8 inline-block rounded-2xl bg-[#141310] px-8 py-6 border border-gold/30 gold-glow">
+              <div className="text-white font-semibold tracking-[0.15em] text-xs sm:text-sm uppercase">Non ci limitiamo a vendere immobili.</div>
+              <div className="font-display text-3xl sm:text-4xl text-gold-gradient mt-1.5">Creiamo Valore.</div>
+            </div>
+            <p className="mt-6 text-lg text-neutral-600 leading-relaxed max-w-2xl">
               Hub di servizi immobiliari, property management, aste e intermediazione d'élite.
               Sede centrale a Potenza, consulenti a domicilio in tutta la Basilicata. Nessun ufficio da raggiungere: siamo noi a venire da te.
             </p>
@@ -113,10 +116,10 @@ export default function Hub() {
             <div className="relative grid lg:grid-cols-2 gap-10 items-center">
               <div>
                 <span className="text-xs uppercase tracking-[0.3em] text-gold">Esclusiva Proprietari</span>
-                <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mt-3 leading-tight">
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-neutral-900 mt-3 leading-tight">
                   Il Gestionale che fa sembrare il tuo B&B un conto di Home Banking
                 </h2>
-                <p className="mt-4 text-gray-300 leading-relaxed">
+                <p className="mt-4 text-neutral-600 leading-relaxed">
                   Monitora dal telefono incassi mensili, tasso di occupazione, check-in ospiti, storico bonifici,
                   manutenzioni e bollette. I proprietari Supreme House non pensano a nulla: incassano e basta.
                 </p>
@@ -166,7 +169,7 @@ export default function Hub() {
                   <div className="flex items-center gap-4 lg:w-64 shrink-0">
                     <div className="w-12 h-12 rounded-xl metallic flex items-center justify-center font-display text-xl font-black">{n.position}°</div>
                     <div>
-                      <div className="font-display text-xl font-semibold text-white">{n.name}</div>
+                      <div className="font-display text-xl font-semibold text-neutral-900">{n.name}</div>
                       <div className="flex items-center gap-1.5 text-sm">
                         <span className="text-gold font-mono">{n.demand_index}/100</span>
                         <Flame size={13} className="text-amber" />
@@ -180,8 +183,8 @@ export default function Hub() {
                     <Metric label="Tempo medio" value={n.avg_time} />
                   </div>
                 </div>
-                <div className="mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <span className="flex items-center gap-2 text-sm text-gray-200">
+                <div className="mt-4 pt-4 border-t border-black/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <span className="flex items-center gap-2 text-sm text-neutral-700">
                     🎯 <span className="text-gold font-semibold">{n.clients_waiting} clienti verificati</span> cercano casa qui in questo momento
                   </span>
                   <LeadDialog testId={`neigh-propose-${n.position}`} requestType="Proposta Immobile per Quartiere"
@@ -207,10 +210,10 @@ export default function Hub() {
                 <div className="flex items-center gap-2 text-xs text-emerald mb-3">
                   <span className="live-dot" /> Presidio Attivo
                 </div>
-                <h3 className="font-display text-xl font-semibold text-white">{p.name}</h3>
+                <h3 className="font-display text-xl font-semibold text-neutral-900">{p.name}</h3>
                 <p className="text-sm text-muted-foreground mt-1">{p.subtitle}</p>
-                <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-sm">
-                  <span className="text-gray-300">Consulente a domicilio in 24h</span>
+                <div className="mt-4 pt-4 border-t border-black/5 flex items-center justify-between text-sm">
+                  <span className="text-neutral-600">Consulente a domicilio in 24h</span>
                   <span className="font-mono text-gold">{p.dossiers} Dossier</span>
                 </div>
               </div>
@@ -221,7 +224,7 @@ export default function Hub() {
 
       {/* ===== G) STATISTICHE GLOBALI ===== */}
       <section className="py-20 relative">
-        <div className="absolute inset-0 bg-night/40" />
+        <div className="absolute inset-0 bg-[#efe7d6]/70" />
         <div className="relative max-w-7xl mx-auto px-5 lg:px-8">
           <SectionTitle eyebrow="Il Gruppo in numeri" title="Statistiche Globali del Gruppo" align="center" className="mx-auto text-center" />
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
@@ -254,7 +257,7 @@ export default function Hub() {
                   <Trophy size={18} className="absolute bottom-3 right-3 text-gold" />
                 </div>
                 <div className="p-4">
-                  <div className="text-sm font-semibold text-white">{p.title}</div>
+                  <div className="text-sm font-semibold text-neutral-900">{p.title}</div>
                   <div className="text-xs text-muted-foreground mt-0.5">{p.neighborhood}, {p.city}</div>
                 </div>
               </div>
@@ -299,7 +302,7 @@ export default function Hub() {
 const Metric = ({ label, value }) => (
   <div>
     <div className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground">{label}</div>
-    <div className="text-gray-100 font-medium mt-0.5">{value}</div>
+    <div className="text-neutral-800 font-medium mt-0.5">{value}</div>
   </div>
 );
 
@@ -307,7 +310,7 @@ const ActionCard = ({ icon: Icon, title, amount, desc, children }) => (
   <div className="glass-gold rounded-2xl p-7 hover-lift flex flex-col">
     <div className="w-12 h-12 rounded-xl metallic flex items-center justify-center mb-4"><Icon size={22} /></div>
     <div className="text-xs uppercase tracking-[0.2em] text-gold">{amount}</div>
-    <h3 className="font-display text-xl font-semibold text-white mt-1">{title}</h3>
+    <h3 className="font-display text-xl font-semibold text-neutral-900 mt-1">{title}</h3>
     <p className="text-sm text-muted-foreground mt-2 leading-relaxed flex-1">{desc}</p>
     <div className="mt-5">{children}</div>
   </div>

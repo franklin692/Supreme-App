@@ -15,15 +15,15 @@ export const BuyerRequestCard = ({ request: r, testId }) => (
     <div className="space-y-2.5 flex-1">
       <div>
         <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Profilo</div>
-        <div className="text-sm font-semibold text-white">{r.profile}</div>
+        <div className="text-sm font-semibold text-neutral-900">{r.profile}</div>
       </div>
       <div className="flex items-start gap-2">
         <Search size={14} className="text-gold mt-0.5 shrink-0" />
-        <div className="text-sm text-gray-200">{r.searching}</div>
+        <div className="text-sm text-neutral-700">{r.searching}</div>
       </div>
       <div className="flex items-start gap-2">
         <MapPin size={14} className="text-gold mt-0.5 shrink-0" />
-        <div className="text-sm text-gray-300">{r.zone}</div>
+        <div className="text-sm text-neutral-600">{r.zone}</div>
       </div>
       <div className="flex items-start gap-2">
         <Wallet size={14} className="text-emerald mt-0.5 shrink-0" />

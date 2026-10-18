@@ -57,7 +57,7 @@ export default function Accedi() {
     <div className="max-w-3xl mx-auto px-5 lg:px-8 py-12 lg:py-16">
       <div className="text-center mb-10">
         <div className="w-14 h-14 rounded-xl metallic flex items-center justify-center mx-auto mb-4 font-display font-black text-xl">S</div>
-        <h1 className="font-display text-3xl lg:text-4xl font-bold text-white">Portale Supreme House</h1>
+        <h1 className="font-display text-3xl lg:text-4xl font-bold text-neutral-900">Portale Supreme House</h1>
         <p className="text-muted-foreground mt-2">Accedi al tuo spazio riservato o crea un nuovo profilo.</p>
       </div>
 
@@ -68,7 +68,7 @@ export default function Accedi() {
             <LogIn size={26} /> ACCEDI
           </button>
           <button data-testid="choose-register" onClick={() => setMode("register")}
-            className="py-6 rounded-2xl glass-gold text-white font-display text-xl font-bold flex flex-col items-center gap-2 hover:border-gold/60 transition-all duration-300">
+            className="py-6 rounded-2xl glass-gold text-neutral-900 font-display text-xl font-bold flex flex-col items-center gap-2 hover:border-gold/60 transition-all duration-300">
             <UserPlus size={26} /> REGISTRATI
           </button>
         </div>
@@ -84,21 +84,21 @@ export default function Accedi() {
               return (
                 <div key={r.id} className={cn("glass-gold rounded-2xl p-5 transition-all duration-300", open && "border-gold/60")}>
                   <button data-testid={`role-${r.id}`} onClick={() => setSelected(open ? null : r.id)} className="w-full flex items-center gap-4 text-left">
-                    <div className="w-11 h-11 rounded-xl bg-night border border-gold/20 flex items-center justify-center text-gold shrink-0"><Icon size={20} /></div>
+                    <div className="w-11 h-11 rounded-xl bg-neutral-100 border border-gold/20 flex items-center justify-center text-gold shrink-0"><Icon size={20} /></div>
                     <div className="flex-1">
-                      <div className="font-semibold text-white">{r.title}</div>
+                      <div className="font-semibold text-neutral-900">{r.title}</div>
                       <div className="text-xs text-muted-foreground">{r.desc}</div>
                     </div>
                   </button>
 
                   {open && (
-                    <div className="mt-4 pt-4 border-t border-white/5">
+                    <div className="mt-4 pt-4 border-t border-black/5">
                       {r.id === "admin" ? (
                         <form onSubmit={doLogin} className="space-y-3">
                           <Input data-testid="login-username" placeholder="Username (admin / agente)" value={creds.username}
-                            onChange={(e) => setCreds({ ...creds, username: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                            onChange={(e) => setCreds({ ...creds, username: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
                           <Input data-testid="login-password" type="password" placeholder="Password" value={creds.password}
-                            onChange={(e) => setCreds({ ...creds, password: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                            onChange={(e) => setCreds({ ...creds, password: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
                           <button type="submit" disabled={loading} data-testid="login-submit" className="w-full py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all duration-300 disabled:opacity-60">
                             {loading ? "Accesso..." : "Entra nel Gestionale"}
                           </button>
@@ -126,11 +126,11 @@ export default function Accedi() {
         <div className="max-w-md mx-auto">
           <BackBtn onClick={() => setMode("choose")} />
           <form onSubmit={doRegister} className="glass-gold rounded-2xl p-6 space-y-3">
-            <Input data-testid="reg-name" placeholder="Nome e Cognome" value={reg.name} onChange={(e) => setReg({ ...reg, name: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
-            <Input data-testid="reg-username" placeholder="Username" value={reg.username} onChange={(e) => setReg({ ...reg, username: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
-            <Input data-testid="reg-password" type="password" placeholder="Password" value={reg.password} onChange={(e) => setReg({ ...reg, password: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+            <Input data-testid="reg-name" placeholder="Nome e Cognome" value={reg.name} onChange={(e) => setReg({ ...reg, name: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
+            <Input data-testid="reg-username" placeholder="Username" value={reg.username} onChange={(e) => setReg({ ...reg, username: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
+            <Input data-testid="reg-password" type="password" placeholder="Password" value={reg.password} onChange={(e) => setReg({ ...reg, password: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
             <Select value={reg.role} onValueChange={(v) => setReg({ ...reg, role: v })}>
-              <SelectTrigger data-testid="reg-role" className="bg-night/70 border-gold/20 focus:ring-gold"><SelectValue /></SelectTrigger>
+              <SelectTrigger data-testid="reg-role" className="bg-white border-gold/20 focus:ring-gold"><SelectValue /></SelectTrigger>
               <SelectContent className="glass-gold border-gold/30">
                 <SelectItem value="user">Utente / Acquirente</SelectItem>
                 <SelectItem value="bnb_owner">Proprietario B&B / Immobile</SelectItem>

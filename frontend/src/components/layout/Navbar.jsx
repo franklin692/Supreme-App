@@ -36,7 +36,7 @@ export const TopNav = () => {
             <NavLink key={t.to} to={t.to} end={t.end} data-testid={t.testid}
               className={({ isActive }) => cn(
                 "px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300",
-                isActive ? "text-gold bg-gold/10" : "text-gray-300 hover:text-gold"
+                isActive ? "text-gold bg-gold/10" : "text-neutral-600 hover:text-gold"
               )}>
               {t.label}
             </NavLink>
@@ -64,7 +64,7 @@ export const BottomNav = () => {
             <NavLink key={t.to} to={t.to} end={t.end} data-testid={`bottom-${t.testid}`}
               className={({ isActive }) => cn(
                 "flex flex-col items-center justify-center gap-1 transition-colors duration-300",
-                isActive ? "text-gold" : "text-gray-400"
+                isActive ? "text-gold" : "text-neutral-500"
               )}>
               {({ isActive }) => (
                 <>

@@ -39,17 +39,17 @@ export default function Immobili() {
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-8 py-10 lg:py-14">
       <SectionTitle eyebrow="Catalogo & Mappa" title="Immobili, Aste e Opportunità"
-        subtitle="Esplora gli immobili sulla mappa scura dei quartieri di Potenza o nel catalogo filtrabile." />
+        subtitle="Esplora gli immobili sulla mappa dei quartieri di Potenza o nel catalogo filtrabile." />
 
       {/* Map banner */}
       <button data-testid="open-map-btn" onClick={() => setMapOpen((v) => !v)}
         className="w-full glass-gold rounded-2xl overflow-hidden relative group mb-6 hover-lift">
-        <div className="h-40 lg:h-48 relative bg-gradient-to-br from-night to-obsidian flex items-center justify-center">
+        <div className="h-40 lg:h-48 relative bg-gradient-to-br from-[#efe7d6] to-[#e4d9c0] flex items-center justify-center">
           <div className="absolute inset-0 opacity-40"
             style={{ backgroundImage: "radial-gradient(circle at 30% 40%, rgba(212,175,55,0.3), transparent 20%), radial-gradient(circle at 60% 60%, rgba(212,175,55,0.25), transparent 15%), radial-gradient(circle at 75% 35%, rgba(16,185,129,0.25), transparent 18%)" }} />
           <div className="relative text-center">
             <div className="w-14 h-14 rounded-full metallic flex items-center justify-center mx-auto mb-3 gold-glow"><MapIcon size={24} /></div>
-            <div className="font-display text-xl lg:text-2xl font-bold text-white">
+            <div className="font-display text-xl lg:text-2xl font-bold text-neutral-900">
               {mapOpen ? "Chiudi Mappa" : "Apri Mappa Interattiva"}
             </div>
             <div className="text-sm text-muted-foreground">Quartieri & Immobili di Potenza</div>
@@ -68,7 +68,7 @@ export default function Immobili() {
         {[{ id: "vendita", label: "VENDITA" }, { id: "affitto", label: "AFFITTO" }].map((s) => (
           <button key={s.id} data-testid={`sale-${s.id}`} onClick={() => setSale(sale === s.id ? null : s.id)}
             className={cn("py-5 rounded-2xl font-display text-lg lg:text-xl font-bold tracking-wide transition-all duration-300 border",
-              sale === s.id ? "metallic border-transparent gold-glow" : "glass-gold text-white hover:border-gold/60")}>
+              sale === s.id ? "metallic border-transparent gold-glow" : "glass-gold text-neutral-900 hover:border-gold/60")}>
             {s.label}
           </button>
         ))}
@@ -80,7 +80,7 @@ export default function Immobili() {
         {QUICK.map((q) => (
           <button key={q.id} data-testid={`quick-${q.id}`} onClick={() => setQuick(q.id)}
             className={cn("px-4 py-2 rounded-full text-sm border transition-all duration-300",
-              quick === q.id ? "border-gold text-gold bg-gold/10" : "border-white/10 text-gray-300 hover:border-gold/40")}>
+              quick === q.id ? "border-gold text-gold bg-gold/10" : "border-black/10 text-neutral-600 hover:border-gold/40")}>
             {q.label}
           </button>
         ))}

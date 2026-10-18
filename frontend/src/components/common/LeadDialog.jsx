@@ -60,7 +60,7 @@ export const LeadDialog = ({
           <>
             <DialogHeader>
               <DialogTitle className="font-display text-2xl text-gold-gradient">{title}</DialogTitle>
-              {description && <DialogDescription className="text-gray-300 leading-relaxed">{description}</DialogDescription>}
+              {description && <DialogDescription className="text-neutral-600 leading-relaxed">{description}</DialogDescription>}
             </DialogHeader>
             {property && (
               <div className="text-xs font-mono text-gold bg-gold/10 rounded-md px-3 py-2 border border-gold/20">
@@ -70,21 +70,21 @@ export const LeadDialog = ({
             <form onSubmit={submit} className="space-y-3 mt-1">
               <Input data-testid={`${testId}-name`} placeholder="Nome e Cognome" value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                className="bg-white border-gold/20 focus-visible:ring-gold" />
               <Input data-testid={`${testId}-phone`} placeholder="Numero WhatsApp" value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                className="bg-white border-gold/20 focus-visible:ring-gold" />
               {showEmail && (
                 <Input data-testid={`${testId}-email`} placeholder="Email (facoltativa)" value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                  className="bg-white border-gold/20 focus-visible:ring-gold" />
               )}
               {showTimeSlot && (
                 <TimeSlotPicker value={form.time_slot} onChange={(v) => setForm({ ...form, time_slot: v })} testidPrefix={`${testId}-slot`} />
               )}
               <Textarea data-testid={`${testId}-notes`} placeholder="Note (facoltative)" value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                className="bg-night/70 border-gold/20 focus-visible:ring-gold min-h-[64px]" />
+                className="bg-white border-gold/20 focus-visible:ring-gold min-h-[64px]" />
               <button type="submit" disabled={loading} data-testid={`${testId}-submit`}
                 className="w-full py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all duration-300 disabled:opacity-60">
                 {loading ? "Invio..." : "Invia Richiesta Riservata"}
@@ -98,7 +98,7 @@ export const LeadDialog = ({
           <div className="py-8 text-center" data-testid={`${testId}-success`}>
             <CheckCircle2 size={56} className="text-emerald mx-auto mb-4" />
             <h3 className="font-display text-2xl text-gold-gradient mb-2">Perfetto!</h3>
-            <p className="text-gray-300 text-sm leading-relaxed px-4">{successMessage}</p>
+            <p className="text-neutral-600 text-sm leading-relaxed px-4">{successMessage}</p>
             <button onClick={() => setOpen(false)} className="mt-6 px-6 py-2.5 rounded-full border border-gold/40 text-gold hover:bg-gold/10 transition-colors duration-300">
               Chiudi
             </button>

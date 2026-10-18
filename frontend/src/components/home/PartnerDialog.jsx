@@ -46,7 +46,7 @@ export const PartnerDialog = ({ trigger }) => {
             </DialogHeader>
             <form onSubmit={submit} className="space-y-3 mt-1">
               <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
-                <SelectTrigger data-testid="partner-category" className="bg-night/70 border-gold/20 focus:ring-gold">
+                <SelectTrigger data-testid="partner-category" className="bg-white border-gold/20 focus:ring-gold">
                   <SelectValue placeholder="Seleziona la tua categoria" />
                 </SelectTrigger>
                 <SelectContent className="glass-gold border-gold/30">
@@ -54,11 +54,11 @@ export const PartnerDialog = ({ trigger }) => {
                 </SelectContent>
               </Select>
               <Input data-testid="partner-name" placeholder="Nome / Ragione Sociale" value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                onChange={(e) => setForm({ ...form, name: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
               <Input data-testid="partner-phone" placeholder="Numero WhatsApp" value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                onChange={(e) => setForm({ ...form, phone: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
               <Input data-testid="partner-email" placeholder="Email (facoltativa)" value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+                onChange={(e) => setForm({ ...form, email: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
               <button type="submit" disabled={loading} data-testid="partner-submit"
                 className="w-full py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all duration-300 disabled:opacity-60">
                 {loading ? "Invio..." : "Invia richiesta di partnership"}
@@ -69,7 +69,7 @@ export const PartnerDialog = ({ trigger }) => {
           <div className="py-8 text-center" data-testid="partner-success">
             <CheckCircle2 size={56} className="text-emerald mx-auto mb-4" />
             <h3 className="font-display text-2xl text-gold-gradient mb-2">Richiesta inviata</h3>
-            <p className="text-gray-300 text-sm px-4">Valuteremo il tuo profilo e ti ricontatteremo per l'accreditamento alla rete Partner.</p>
+            <p className="text-neutral-600 text-sm px-4">Valuteremo il tuo profilo e ti ricontatteremo per l'accreditamento alla rete Partner.</p>
             <button onClick={() => setOpen(false)} className="mt-6 px-6 py-2.5 rounded-full border border-gold/40 text-gold hover:bg-gold/10 transition-colors duration-300">Chiudi</button>
           </div>
         )}

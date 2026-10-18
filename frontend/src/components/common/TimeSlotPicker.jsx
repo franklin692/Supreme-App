@@ -18,7 +18,7 @@ export const TimeSlotPicker = ({ value, onChange, testidPrefix = "slot" }) => (
             "px-2 py-2.5 rounded-lg text-xs font-medium border transition-all duration-300",
             value === s
               ? "metallic border-transparent"
-              : "border-gold/25 text-gray-300 hover:border-gold/60 bg-night/60"
+              : "border-gold/25 text-neutral-600 hover:border-gold/60 bg-white"
           )}>
           {s}
         </button>

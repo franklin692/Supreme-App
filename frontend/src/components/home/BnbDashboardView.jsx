@@ -46,7 +46,7 @@ export const BnbDashboardView = ({ data }) => {
         <div className="space-y-2">
           {(d.upcoming_checkins || []).map((c, i) => (
             <div key={i} className="flex items-center justify-between text-sm">
-              <span className="text-gray-200">{c.guest}</span>
+              <span className="text-neutral-700">{c.guest}</span>
               <span className="text-xs text-muted-foreground">{c.date} · <span className="text-emerald">{c.status}</span></span>
             </div>
           ))}
@@ -59,8 +59,8 @@ export const BnbDashboardView = ({ data }) => {
         <div className="space-y-2">
           {(d.transfers || []).map((t, i) => (
             <div key={i} className="flex items-center justify-between text-sm font-mono">
-              <span className="text-gray-300">{t.date}</span>
-              <span className="text-gray-200">Bonifico inviato: <span className="text-emerald font-bold">{t.amount.toLocaleString("it-IT")}€</span> ✔️</span>
+              <span className="text-neutral-600">{t.date}</span>
+              <span className="text-neutral-700">Bonifico inviato: <span className="text-emerald font-bold">{t.amount.toLocaleString("it-IT")}€</span> ✔️</span>
             </div>
           ))}
         </div>
@@ -71,13 +71,13 @@ export const BnbDashboardView = ({ data }) => {
         <div className="glass rounded-xl p-4">
           <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold mb-2"><Wrench size={14} /> Manutenzioni</div>
           {(d.maintenance || []).map((m, i) => (
-            <div key={i} className="text-sm text-gray-200">{m.item} <span className="text-xs text-amber">· {m.status}</span></div>
+            <div key={i} className="text-sm text-neutral-700">{m.item} <span className="text-xs text-amber">· {m.status}</span></div>
           ))}
         </div>
         <div className="glass rounded-xl p-4">
           <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold mb-2"><FileText size={14} /> Bollette</div>
           {(d.bills || []).map((b, i) => (
-            <div key={i} className="text-sm text-gray-200">{b.item} <span className="text-xs text-emerald">· {b.status}</span></div>
+            <div key={i} className="text-sm text-neutral-700">{b.item} <span className="text-xs text-emerald">· {b.status}</span></div>
           ))}
         </div>
       </div>

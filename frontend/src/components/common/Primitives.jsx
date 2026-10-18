@@ -9,7 +9,7 @@ export const SectionTitle = ({ eyebrow, title, subtitle, align = "left", classNa
         <span className="text-xs uppercase tracking-[0.3em] text-gold font-medium">{eyebrow}</span>
       </div>
     )}
-    <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">{title}</h2>
+    <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900">{title}</h2>
     {subtitle && <p className="mt-4 text-muted-foreground text-base leading-relaxed">{subtitle}</p>}
   </div>
 );

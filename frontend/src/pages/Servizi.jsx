@@ -21,7 +21,7 @@ export default function Servizi() {
             <Link key={s.id} to={`/servizi/${s.id}`} data-testid={`service-${i}`}
               className="glass-gold rounded-2xl p-7 hover-lift group flex flex-col">
               <div className="w-12 h-12 rounded-xl metallic flex items-center justify-center mb-4"><Icon size={22} /></div>
-              <h3 className="font-display text-xl font-semibold text-white leading-tight">{s.title}</h3>
+              <h3 className="font-display text-xl font-semibold text-neutral-900 leading-tight">{s.title}</h3>
               <p className="text-sm text-muted-foreground mt-2 leading-relaxed flex-1">{s.short}</p>
               <span className="mt-5 inline-flex items-center gap-2 text-gold text-sm font-medium group-hover:gap-3 transition-all duration-300">
                 Scopri di più <ArrowRight size={16} />

@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Ticker } from "@/components/layout/Ticker";
 import { TopNav, BottomNav } from "@/components/layout/Navbar";
+import { NewsletterSignup } from "@/components/common/NewsletterSignup";
 
 export const Layout = () => {
   const { pathname } = useLocation();
@@ -20,6 +21,9 @@ export const Layout = () => {
 
 const Footer = () => (
   <footer className="border-t border-gold/15 mt-10 pb-28 lg:pb-10">
+    <div className="max-w-7xl mx-auto px-5 lg:px-8 pt-12">
+      <NewsletterSignup />
+    </div>
     <div className="max-w-7xl mx-auto px-5 lg:px-8 pt-12 grid gap-8 md:grid-cols-4">
       <div className="md:col-span-2">
         <div className="font-display text-2xl text-gold-gradient font-bold tracking-tight">SUPREME HOUSE</div>
@@ -44,7 +48,7 @@ const Footer = () => (
         </ul>
       </div>
     </div>
-    <div className="max-w-7xl mx-auto px-5 lg:px-8 mt-10 pt-6 border-t border-white/5 text-xs text-muted-foreground flex flex-col md:flex-row justify-between gap-2">
+    <div className="max-w-7xl mx-auto px-5 lg:px-8 mt-10 pt-6 border-t border-black/5 text-xs text-muted-foreground flex flex-col md:flex-row justify-between gap-2">
       <span>© {new Date().getFullYear()} Supreme House · Tutti i diritti riservati</span>
       <span className="font-mono text-gold/70">Osservatorio Immobiliare Basilicata</span>
     </div>

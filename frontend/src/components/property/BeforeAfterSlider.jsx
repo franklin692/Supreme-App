@@ -36,7 +36,7 @@ export const BeforeAfterSlider = ({ before, after, testId = "before-after" }) =>
 
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
         <img src={before} alt="Stato attuale" className="absolute inset-0 h-full object-cover" style={{ width: containerRef.current ? containerRef.current.getBoundingClientRect().width : "100%" }} draggable={false} />
-        <div className="absolute top-3 left-3 text-[11px] font-bold bg-obsidian/80 border border-white/20 text-white px-2.5 py-1 rounded-full">STATO ATTUALE</div>
+        <div className="absolute top-3 left-3 text-[11px] font-bold bg-obsidian/80 border border-black/10 text-neutral-900 px-2.5 py-1 rounded-full">STATO ATTUALE</div>
       </div>
 
       <div className="absolute top-0 bottom-0 z-20" style={{ left: `${pos}%`, transform: "translateX(-50%)" }}

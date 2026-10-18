@@ -24,12 +24,12 @@ export const VipSection = () => {
 
   return (
     <div data-testid="section-vip">
-      <div className="flex items-center gap-2 text-gold mb-5"><Crown size={20} /><h2 className="font-display text-2xl text-white">Generatore Link Riservato per Proprietario VIP</h2></div>
+      <div className="flex items-center gap-2 text-gold mb-5"><Crown size={20} /><h2 className="font-display text-2xl text-neutral-900">Generatore Link Riservato per Proprietario VIP</h2></div>
 
       <div className="glass-gold rounded-2xl p-5 mb-6 grid sm:grid-cols-4 gap-3 items-end">
-        <div><label className="text-[11px] text-muted-foreground mb-1 block">Nome proprietario</label><Input data-testid="vip-owner" placeholder="Es. Dott. Mancusi" value={f.owner_name} onChange={(e) => setF({ ...f, owner_name: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" /></div>
-        <div><label className="text-[11px] text-muted-foreground mb-1 block">Quartiere immobile</label><Input data-testid="vip-neigh" placeholder="Es. Macchia Romana" value={f.neighborhood} onChange={(e) => setF({ ...f, neighborhood: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" /></div>
-        <div><label className="text-[11px] text-muted-foreground mb-1 block">Acquirenti compatibili</label><Input data-testid="vip-buyers" type="number" value={f.compatible_buyers} onChange={(e) => setF({ ...f, compatible_buyers: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" /></div>
+        <div><label className="text-[11px] text-muted-foreground mb-1 block">Nome proprietario</label><Input data-testid="vip-owner" placeholder="Es. Dott. Mancusi" value={f.owner_name} onChange={(e) => setF({ ...f, owner_name: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" /></div>
+        <div><label className="text-[11px] text-muted-foreground mb-1 block">Quartiere immobile</label><Input data-testid="vip-neigh" placeholder="Es. Macchia Romana" value={f.neighborhood} onChange={(e) => setF({ ...f, neighborhood: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" /></div>
+        <div><label className="text-[11px] text-muted-foreground mb-1 block">Acquirenti compatibili</label><Input data-testid="vip-buyers" type="number" value={f.compatible_buyers} onChange={(e) => setF({ ...f, compatible_buyers: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" /></div>
         <button data-testid="vip-create" onClick={create} className="py-2.5 rounded-full metallic font-semibold hover:brightness-110 transition-all">Genera Link</button>
       </div>
 
@@ -37,7 +37,7 @@ export const VipSection = () => {
         {links.map((l) => (
           <div key={l.id} className="glass rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3" data-testid={`vip-link-${l.id}`}>
             <div>
-              <div className="font-semibold text-white">{l.owner_name} <span className="text-muted-foreground font-normal text-sm">· {l.neighborhood} · {l.compatible_buyers} acquirenti</span></div>
+              <div className="font-semibold text-neutral-900">{l.owner_name} <span className="text-muted-foreground font-normal text-sm">· {l.neighborhood} · {l.compatible_buyers} acquirenti</span></div>
               <div className="text-xs font-mono text-gold break-all">{fullUrl(l.token)}</div>
             </div>
             <div className="flex items-center gap-2 shrink-0">

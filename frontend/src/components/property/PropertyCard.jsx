@@ -34,13 +34,13 @@ export const PropertyCard = ({ property: p, testId }) => {
                 <div className="w-14 h-14 rounded-full metallic flex items-center justify-center mb-3 gold-glow">
                   <Lock size={24} />
                 </div>
-                <div className="font-display text-lg font-bold text-white">Opportunità Riservata</div>
+                <div className="font-display text-lg font-bold text-neutral-900">Opportunità Riservata</div>
                 <div className="text-emerald text-sm font-mono mt-1">Rendimento stimato 11% annuo</div>
               </div>
             </div>
             <div className="p-5">
               <div className="text-xs uppercase tracking-[0.2em] text-gold mb-1">Off-Market · Riservato</div>
-              <p className="text-sm text-gray-300">Clicca per sbloccare gratuitamente le offerte off-market selezionate Supreme House.</p>
+              <p className="text-sm text-neutral-600">Clicca per sbloccare gratuitamente le offerte off-market selezionate Supreme House.</p>
             </div>
           </div>
         }
@@ -70,7 +70,7 @@ export const PropertyCard = ({ property: p, testId }) => {
         </div>
 
         {!isConcluded && (
-          <div className="absolute bottom-3 left-3 flex items-center gap-3 text-xs text-gray-200 font-mono">
+          <div className="absolute bottom-3 left-3 flex items-center gap-3 text-xs text-neutral-700 font-mono">
             <span className="flex items-center gap-1 bg-obsidian/70 px-2 py-1 rounded"><Eye size={13} className="text-gold" /> {p.views?.toLocaleString("it-IT")}</span>
             <span className="flex items-center gap-1 bg-obsidian/70 px-2 py-1 rounded"><Share2 size={13} className="text-emerald" /> {p.whatsapp_shares}</span>
           </div>
@@ -84,7 +84,7 @@ export const PropertyCard = ({ property: p, testId }) => {
             <span className="flex items-center gap-1.5 text-[11px] text-red-400"><span className="live-dot" /> {p.observing_count} stanno guardando</span>
           )}
         </div>
-        <h3 className="font-display text-lg font-semibold text-white leading-tight">{p.title}</h3>
+        <h3 className="font-display text-lg font-semibold text-neutral-900 leading-tight">{p.title}</h3>
         <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
           <MapPin size={13} className="text-gold" /> {p.neighborhood}, {p.city}
         </div>

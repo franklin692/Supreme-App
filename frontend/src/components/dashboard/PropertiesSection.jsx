@@ -36,7 +36,7 @@ export const PropertiesSection = () => {
   return (
     <div data-testid="section-properties">
       <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-2 text-gold"><Building size={20} /><h2 className="font-display text-2xl text-white">Gestione Immobili / Aste / Operazioni</h2></div>
+        <div className="flex items-center gap-2 text-gold"><Building size={20} /><h2 className="font-display text-2xl text-neutral-900">Gestione Immobili / Aste / Operazioni</h2></div>
         <button data-testid="prop-new-btn" onClick={() => setEditing(blank)} className="flex items-center gap-2 px-4 py-2.5 rounded-full metallic text-sm font-semibold hover:brightness-110 transition-all"><Plus size={15} /> Nuovo annuncio</button>
       </div>
 
@@ -46,7 +46,7 @@ export const PropertiesSection = () => {
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <div className="text-[10px] font-mono text-gold">{p.ref_code} · {p.type}</div>
-                <div className="font-semibold text-white text-sm truncate">{p.title}</div>
+                <div className="font-semibold text-neutral-900 text-sm truncate">{p.title}</div>
                 <div className="text-xs text-muted-foreground">{p.neighborhood}</div>
                 <div className="font-mono text-emerald text-sm mt-1">{formatPrice(p.price, p.price_period)}</div>
               </div>
@@ -143,8 +143,8 @@ const PropertyForm = ({ initial, onClose, onDone }) => {
           <Field label="Bollino Operazione Conclusa"><Input value={f.concluded_badge} onChange={(e) => set("concluded_badge", e.target.value)} className={inp} placeholder="✔️ VENDUTO IN 18 GIORNI" /></Field>
           <Field label="Rendimento (off-market)"><Input value={f.rendimento} onChange={(e) => set("rendimento", e.target.value)} className={inp} /></Field>
           <Field label="Nota dell'Advisor" className="sm:col-span-2"><Textarea data-testid="pf-note" value={f.advisor_note} onChange={(e) => set("advisor_note", e.target.value)} className={inp + " min-h-[70px]"} /></Field>
-          <div className="flex items-center gap-2"><Switch checked={f.pre_verified} onCheckedChange={(v) => set("pre_verified", v)} data-testid="pf-verified" /><span className="text-sm text-gray-300">Scudo Pre-Verificato</span></div>
-          <div className="flex items-center gap-2"><Switch checked={f.elevator} onCheckedChange={(v) => set("elevator", v)} /><span className="text-sm text-gray-300">Ascensore</span></div>
+          <div className="flex items-center gap-2"><Switch checked={f.pre_verified} onCheckedChange={(v) => set("pre_verified", v)} data-testid="pf-verified" /><span className="text-sm text-neutral-600">Scudo Pre-Verificato</span></div>
+          <div className="flex items-center gap-2"><Switch checked={f.elevator} onCheckedChange={(v) => set("elevator", v)} /><span className="text-sm text-neutral-600">Ascensore</span></div>
         </div>
         <button onClick={save} data-testid="pf-save" className="w-full py-3 mt-2 rounded-full metallic font-semibold hover:brightness-110 transition-all">{isNew ? "Crea annuncio" : "Salva modifiche"}</button>
       </DialogContent>
@@ -152,7 +152,7 @@ const PropertyForm = ({ initial, onClose, onDone }) => {
   );
 };
 
-const inp = "bg-night/70 border-gold/20 focus-visible:ring-gold text-sm h-9";
+const inp = "bg-white border-gold/20 focus-visible:ring-gold text-sm h-9";
 const Field = ({ label, children, className = "" }) => (
   <div className={className}><label className="text-[11px] text-muted-foreground mb-1 block">{label}</label>{children}</div>
 );

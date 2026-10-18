@@ -27,14 +27,14 @@ export const AgendaSection = () => {
   return (
     <div data-testid="section-agenda">
       <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-2 text-gold"><CalendarDays size={20} /><h2 className="font-display text-2xl text-white">Calendario Giornaliero & Agenda</h2></div>
+        <div className="flex items-center gap-2 text-gold"><CalendarDays size={20} /><h2 className="font-display text-2xl text-neutral-900">Calendario Giornaliero & Agenda</h2></div>
         <AddAppointmentDialog open={open} setOpen={setOpen} onDone={() => qc.invalidateQueries({ queryKey: ["appointments"] })} />
       </div>
 
       <div className="grid md:grid-cols-3 gap-5">
         {bySlot.map(({ slot, items }) => (
           <div key={slot} className="glass rounded-2xl p-4">
-            <div className="text-sm font-semibold text-gold mb-3 pb-2 border-b border-white/5">{slot} <span className="text-muted-foreground font-normal">({items.length})</span></div>
+            <div className="text-sm font-semibold text-gold mb-3 pb-2 border-b border-black/5">{slot} <span className="text-muted-foreground font-normal">({items.length})</span></div>
             <div className="space-y-3">
               {items.length === 0 && <div className="text-xs text-muted-foreground py-4 text-center">Nessun appuntamento</div>}
               {items.map((a) => <ApptCard key={a.id} a={a} setStatus={setStatus} />)}
@@ -58,14 +58,14 @@ export const AgendaSection = () => {
 const ApptCard = ({ a, setStatus }) => (
   <div className="glass-gold rounded-xl p-3" data-testid={`appt-${a.id}`}>
     <div className="flex items-center justify-between">
-      <span className="text-sm font-semibold text-white">{a.client_name}</span>
+      <span className="text-sm font-semibold text-neutral-900">{a.client_name}</span>
       <a href={waLink(a.phone)} target="_blank" rel="noreferrer" className="text-emerald hover:scale-110 transition-transform"><Phone size={15} /></a>
     </div>
     <div className="text-xs text-muted-foreground mt-0.5">{a.type}</div>
     {a.property_title && <div className="text-[11px] text-gold mt-0.5">{a.property_title}</div>}
     <div className="text-[11px] text-muted-foreground mt-1">{a.date}</div>
     <Select value={a.status} onValueChange={(v) => setStatus(a.id, v)}>
-      <SelectTrigger className={cn("mt-2 h-8 text-xs bg-night/70 border-gold/20", STATUS[a.status]?.c)} data-testid={`appt-status-${a.id}`}>
+      <SelectTrigger className={cn("mt-2 h-8 text-xs bg-white border-gold/20", STATUS[a.status]?.c)} data-testid={`appt-status-${a.id}`}>
         <SelectValue>{STATUS[a.status]?.label}</SelectValue>
       </SelectTrigger>
       <SelectContent className="glass-gold border-gold/30">
@@ -90,11 +90,11 @@ const AddAppointmentDialog = ({ open, setOpen, onDone }) => {
       <DialogContent className="glass-gold border-gold/30 max-w-md" data-testid="add-appt-dialog">
         <DialogHeader><DialogTitle className="font-display text-xl text-gold-gradient">Nuovo appuntamento</DialogTitle></DialogHeader>
         <div className="space-y-3">
-          <Input data-testid="appt-name" placeholder="Nome cliente" value={f.client_name} onChange={(e) => setF({ ...f, client_name: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
-          <Input data-testid="appt-phone" placeholder="Telefono" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
-          <Input placeholder="Tipo (es. Sopralluogo)" value={f.type} onChange={(e) => setF({ ...f, type: e.target.value })} className="bg-night/70 border-gold/20 focus-visible:ring-gold" />
+          <Input data-testid="appt-name" placeholder="Nome cliente" value={f.client_name} onChange={(e) => setF({ ...f, client_name: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
+          <Input data-testid="appt-phone" placeholder="Telefono" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
+          <Input placeholder="Tipo (es. Sopralluogo)" value={f.type} onChange={(e) => setF({ ...f, type: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
           <Select value={f.time_slot} onValueChange={(v) => setF({ ...f, time_slot: v })}>
-            <SelectTrigger className="bg-night/70 border-gold/20"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="bg-white border-gold/20"><SelectValue /></SelectTrigger>
             <SelectContent className="glass-gold border-gold/30">{TIME_SLOTS.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
           </Select>
           <button onClick={save} data-testid="appt-save" className="w-full py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all">Aggiungi all'agenda</button>

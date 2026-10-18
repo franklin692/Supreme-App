@@ -566,6 +566,60 @@ async def admin_update_user(uid: str, body: Dict[str, Any], user: dict = Depends
     return clean(await db.users.find_one({"id": uid}, {"_id": 0, "password_hash": 0}))
 
 
+BACKUP_COLLECTIONS = ["properties", "neighborhoods", "poles", "stats", "ticker",
+                      "services", "buyer_requests", "appointments", "leads", "vip_links", "newsletter"]
+
+
+@api.get("/admin/backup/export")
+async def backup_export(user: dict = Depends(require_admin)):
+    data = {}
+    for coll in BACKUP_COLLECTIONS:
+        data[coll] = await db[coll].find({}, {"_id": 0}).to_list(5000)
+    return {"exported_at": now_iso(), "collections": data}
+
+
+@api.post("/admin/backup/import")
+async def backup_import(body: Dict[str, Any], user: dict = Depends(require_admin)):
+    payload = body.get("collections", body)
+    restored = {}
+    for coll in BACKUP_COLLECTIONS:
+        if coll in payload and isinstance(payload[coll], list):
+            await db[coll].delete_many({})
+            if payload[coll]:
+                await db[coll].insert_many([{k: v for k, v in d.items() if k != "_id"} for d in payload[coll]])
+            restored[coll] = len(payload[coll])
+    return {"ok": True, "restored": restored}
+
+
+# ----------------------------- Newsletter -----------------------------
+class NewsletterReq(BaseModel):
+    email: str
+    name: Optional[str] = None
+
+
+@api.post("/newsletter")
+async def newsletter_subscribe(req: NewsletterReq):
+    email = req.email.strip().lower()
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Email non valida")
+    existing = await db.newsletter.find_one({"email": email})
+    if existing:
+        return {"ok": True, "already": True}
+    await db.newsletter.insert_one({"id": new_id(), "email": email, "name": req.name, "created_at": now_iso()})
+    return {"ok": True}
+
+
+@api.get("/admin/newsletter")
+async def newsletter_list(user: dict = Depends(require_admin)):
+    return await db.newsletter.find({}, {"_id": 0}).sort("created_at", -1).to_list(5000)
+
+
+@api.delete("/admin/newsletter/{nid}")
+async def newsletter_delete(nid: str, user: dict = Depends(require_admin)):
+    await db.newsletter.delete_one({"id": nid})
+    return {"ok": True}
+
+
 # ----------------------------- Seed -----------------------------
 from seed_data import (
     SEED_PROPERTIES, SEED_NEIGHBORHOODS, SEED_POLES, SEED_STATS,

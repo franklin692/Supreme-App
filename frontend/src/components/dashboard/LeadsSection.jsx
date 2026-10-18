@@ -24,15 +24,15 @@ export const LeadsSection = () => {
 
   return (
     <div data-testid="section-leads">
-      <div className="flex items-center gap-2 text-gold mb-5"><Database size={20} /><h2 className="font-display text-2xl text-white">Archivio Clienti & Lead — Banca Dati Unificata</h2></div>
+      <div className="flex items-center gap-2 text-gold mb-5"><Database size={20} /><h2 className="font-display text-2xl text-neutral-900">Archivio Clienti & Lead — Banca Dati Unificata</h2></div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <div className="relative flex-1">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <Input data-testid="leads-search" placeholder="Cerca per nome o telefono" value={q} onChange={(e) => setQ(e.target.value)} className="pl-9 bg-night/70 border-gold/20 focus-visible:ring-gold" />
+          <Input data-testid="leads-search" placeholder="Cerca per nome o telefono" value={q} onChange={(e) => setQ(e.target.value)} className="pl-9 bg-white border-gold/20 focus-visible:ring-gold" />
         </div>
         <Select value={typeF} onValueChange={setTypeF}>
-          <SelectTrigger data-testid="leads-filter-type" className="sm:w-72 bg-night/70 border-gold/20"><SelectValue /></SelectTrigger>
+          <SelectTrigger data-testid="leads-filter-type" className="sm:w-72 bg-white border-gold/20"><SelectValue /></SelectTrigger>
           <SelectContent className="glass-gold border-gold/30 max-h-72">
             {types.map((t) => <SelectItem key={t} value={t}>{t === "tutti" ? "Tutti i tipi di richiesta" : t}</SelectItem>)}
           </SelectContent>
@@ -43,7 +43,7 @@ export const LeadsSection = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-[11px] uppercase tracking-wider text-muted-foreground border-b border-white/10">
+              <tr className="text-left text-[11px] uppercase tracking-wider text-muted-foreground border-b border-black/10">
                 <th className="px-4 py-3">Nome</th>
                 <th className="px-4 py-3">Telefono</th>
                 <th className="px-4 py-3">Tipo richiesta</th>
@@ -55,13 +55,13 @@ export const LeadsSection = () => {
             </thead>
             <tbody>
               {filtered.map((l) => (
-                <tr key={l.id} className="border-b border-white/5 hover:bg-white/[0.02]" data-testid={`lead-row-${l.id}`}>
-                  <td className="px-4 py-3 font-medium text-white whitespace-nowrap">{l.name}</td>
+                <tr key={l.id} className="border-b border-black/5 hover:bg-white/[0.02]" data-testid={`lead-row-${l.id}`}>
+                  <td className="px-4 py-3 font-medium text-neutral-900 whitespace-nowrap">{l.name}</td>
                   <td className="px-4 py-3">
                     <a href={waLink(l.phone)} target="_blank" rel="noreferrer" data-testid={`lead-wa-${l.id}`}
                       className="inline-flex items-center gap-1.5 text-emerald hover:underline"><Phone size={13} /> {l.phone}</a>
                   </td>
-                  <td className="px-4 py-3 text-gray-300 whitespace-nowrap">{l.request_type}</td>
+                  <td className="px-4 py-3 text-neutral-600 whitespace-nowrap">{l.request_type}</td>
                   <td className="px-4 py-3 text-gold text-xs">{l.property_title || l.service || "—"}</td>
                   <td className="px-4 py-3 text-muted-foreground text-xs whitespace-nowrap">{l.time_slot || "—"}</td>
                   <td className="px-4 py-3"><span className="text-xs px-2 py-1 rounded-full bg-gold/10 text-gold">{l.status}</span></td>
@@ -97,10 +97,10 @@ const EditLeadDialog = ({ lead, onClose, onDone }) => {
         <div className="text-sm text-muted-foreground -mt-2">{lead.request_type} · {lead.phone}</div>
         <div className="space-y-3 mt-2">
           <Select value={status} onValueChange={setStatus}>
-            <SelectTrigger data-testid="lead-edit-status" className="bg-night/70 border-gold/20"><SelectValue /></SelectTrigger>
+            <SelectTrigger data-testid="lead-edit-status" className="bg-white border-gold/20"><SelectValue /></SelectTrigger>
             <SelectContent className="glass-gold border-gold/30">{STATUS.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
           </Select>
-          <Textarea data-testid="lead-edit-notes" placeholder="Note agente" value={notes} onChange={(e) => setNotes(e.target.value)} className="bg-night/70 border-gold/20 focus-visible:ring-gold min-h-[90px]" />
+          <Textarea data-testid="lead-edit-notes" placeholder="Note agente" value={notes} onChange={(e) => setNotes(e.target.value)} className="bg-white border-gold/20 focus-visible:ring-gold min-h-[90px]" />
           <button onClick={save} data-testid="lead-edit-save" className="w-full py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all">Salva</button>
         </div>
       </DialogContent>

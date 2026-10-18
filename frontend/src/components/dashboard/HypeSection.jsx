@@ -37,7 +37,7 @@ export const HypeSection = () => {
   return (
     <div data-testid="section-hype">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-        <div className="flex items-center gap-2 text-gold"><Rocket size={20} /><h2 className="font-display text-2xl text-white">Motore Hype & Boost Visite</h2></div>
+        <div className="flex items-center gap-2 text-gold"><Rocket size={20} /><h2 className="font-display text-2xl text-neutral-900">Motore Hype & Boost Visite</h2></div>
         <button data-testid="global-boost-btn" onClick={globalBoost}
           className="flex items-center gap-2 px-5 py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all gold-glow">
           <Zap size={17} /> Auto-Boost Globale Settimanale
@@ -50,7 +50,7 @@ export const HypeSection = () => {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="min-w-0">
                 <div className="text-[10px] font-mono text-gold">{p.ref_code}</div>
-                <div className="font-semibold text-white truncate">{p.title}</div>
+                <div className="font-semibold text-neutral-900 truncate">{p.title}</div>
                 <div className="flex items-center gap-3 text-sm font-mono mt-1">
                   <span className="flex items-center gap-1 text-gold"><Eye size={13} /> {p.views?.toLocaleString("it-IT")}</span>
                   <span className="flex items-center gap-1 text-emerald"><Share2 size={13} /> {p.whatsapp_shares}</span>
@@ -65,14 +65,14 @@ export const HypeSection = () => {
                   className="px-3 py-1.5 rounded-full border border-emerald/30 text-emerald text-xs hover:bg-emerald/10 transition-colors">+5 Condivisioni</button>
                 <div className="flex items-center gap-1">
                   <Input value={freeVal[p.id] || ""} onChange={(e) => setFreeVal({ ...freeVal, [p.id]: e.target.value })}
-                    placeholder="n°" className="w-16 h-8 bg-night/70 border-gold/20 text-xs" data-testid={`boost-free-input-${p.id}`} />
+                    placeholder="n°" className="w-16 h-8 bg-white border-gold/20 text-xs" data-testid={`boost-free-input-${p.id}`} />
                   <button data-testid={`boost-free-${p.id}`} onClick={() => { boost(p.id, { views: Number(freeVal[p.id]) || 0 }); setFreeVal({ ...freeVal, [p.id]: "" }); }}
                     className="px-3 py-1.5 rounded-full metallic text-xs">Applica</button>
                 </div>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row sm:items-center gap-4">
-              <label className="flex items-center gap-2 text-sm text-gray-300">
+            <div className="mt-4 pt-4 border-t border-black/5 flex flex-col sm:flex-row sm:items-center gap-4">
+              <label className="flex items-center gap-2 text-sm text-neutral-600">
                 <Switch checked={p.observing_now} onCheckedChange={(v) => boost(p.id, { observing_now: v })} data-testid={`observing-${p.id}`} />
                 <span className="flex items-center gap-1.5">🔴 In Osservazione Ora</span>
               </label>
@@ -80,7 +80,7 @@ export const HypeSection = () => {
                 {PRESET_BADGES.map((b) => (
                   <button key={b} data-testid={`badge-${p.id}`} onClick={() => toggleBadge(p, b)}
                     className={cn("px-2.5 py-1 rounded-full text-[10px] border transition-all",
-                      (p.status_badges || []).includes(b) ? "metallic border-transparent" : "border-white/15 text-gray-400 hover:border-gold/40")}>
+                      (p.status_badges || []).includes(b) ? "metallic border-transparent" : "border-black/10 text-neutral-500 hover:border-gold/40")}>
                     {b}
                   </button>
                 ))}
