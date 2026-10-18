@@ -1,0 +1,43 @@
+# SUPREME HOUSE — PRD
+
+## Problem Statement (originale)
+Build 1.0 completa della Web App + Piattaforma Gestionale per "SUPREME HOUSE": hub di servizi immobiliari, property management, aste e intermediazione d'élite con sede a Potenza e operatività in tutta la Basilicata. Estetica "Private Banking Luxury Dark Mode" (nero ossidiana/blu notte, oro champagne, ambra, verde smeraldo, glassmorphism). Tutto modificabile dalla "Cabina di Regia" (Super-Admin) senza toccare il codice. Dati realistici precaricati su Potenza/Basilicata.
+
+## Stack & Architettura
+- Frontend: React 19 + Tailwind + shadcn/ui + framer-motion + recharts + react-leaflet (CartoDB dark, key-free) + react-fast-marquee. Alias `@` → src.
+- Backend: FastAPI, tutte le route sotto `/api`, auth JWT Bearer (token in localStorage `sh_token`).
+- DB: MongoDB (collections: users, properties, neighborhoods, poles, stats, ticker, services, buyer_requests, leads, appointments, vip_links). Documenti con `id` uuid, proiezione `{_id:0}`.
+- Seed idempotente in `seed_data.py` (eseguito a startup).
+
+## Scelte utente
+- Auth JWT username/password: admin/admin123 (super-admin), agente/agente123 (agente) + demo 1-click per utente/bnb/condomino/collaboratore.
+- Foto stock reali. Mappa Leaflet dark. Lead SOLO salvati nell'Archivio Admin + link wa.me (NESSUN invio WhatsApp reale).
+
+## Ruoli / Autorizzazioni
+- public: contenuti, lead, buyer-request pubblica, vip/{token}.
+- staff (admin+agent): agenda, archivio lead, CRUD immobili.
+- admin only: motore hype/boost, quartieri/poli, ticker/stats/servizi/bacheca, link VIP, utenti. (agent → 403).
+
+## Implementato (2026-10-18)
+- 5 sezioni nav: Hub, Immobili (+mappa), Chi Cerca, Servizi, Accedi. Top-nav desktop + bottom-nav mobile + ticker Wall Street.
+- HUB: hero + modale Private Advisor (3 opzioni+fascia), carosello Chi Cerca, vetrina Più Visti + card Off-Market sfocata, sponsor Gestionale B&B + Demo Live (recharts), classifica 6 quartieri (Osservatorio), 6 Poli, 6 contatori animati, Operazioni Concluse, Segnala/Lavora/Collabora (Partner con selettore categoria).
+- IMMOBILI: bottone mappa → Leaflet dark con pin oro + cerchi quartieri; selettori VENDITA/AFFITTO; filtri rapidi; card con RIF, doppio contatore hype, pillola osservazione, badge status, prezzo barrato, scudo pre-verificato.
+- DETTAGLIO: gallery, before/after trascinabile, Iper-Potentini, termometro spese, scudo 3 spunte, Nota Advisor, planimetria sfocata che si sblocca con lead, mappa esatta, CTA con fascia oraria, alert ribasso prezzo.
+- CHI CERCA: card stile banca privata + "Proponilo" + inserimento nuova richiesta.
+- SERVIZI: 9 servizi con pagina dedicata; Off-Market con 2 moduli (proprietari/investitori); Property Management con Demo.
+- ACCEDI: ACCEDI/REGISTRATI, 5 ruoli, login admin/agente, demo 1-click; register.
+- GESTIONALE (AREA 1): Agenda per fascia oraria + stato + nuovo appuntamento; Archivio Lead unificato (ricerca/filtro, wa.me, note/stato); CRUD Immobili/Aste/Concluse con tutti i campi speciali.
+- CABINA DI REGIA (AREA 2, admin): Motore Hype (+50/+100/+500 views, +5 shares, input libero, switch osservazione, bollini, Auto-Boost Globale); Quartieri & Poli editabili; Gestione Sito (ticker, 6 contatori, servizi CRUD, bacheca CRUD/approva); Generatore Link VIP (pagina nera/oro /vip/{token}); Gestione Utenti (provvigioni segnalatori).
+- PANNELLI RUOLO: utente, proprietario B&B (dashboard home-banking), condòmino (avvisi/rate/verbali/guasti), collaboratore (barra 4 step).
+- Seed: 6 immobili+1 off-market+4 concluse, 6 quartieri, 6 poli, 6 stats, 5 richieste bacheca, 9 servizi, 5 appuntamenti+lead, demo users.
+
+## Note / MOCKED
+- WhatsApp/alert prezzo: NESSUN invio reale — i contatti sono SOLO salvati nei Lead con link wa.me (scelta utente confermata).
+- Nessuna integrazione LLM/pagamenti in Build 1.0.
+
+## Testing
+- Backend: 34/34 pytest PASS. Frontend: ~95% (tutti i flussi verificati dal testing agent; tile mappa spostati su CartoDB key-free verificato 200).
+
+## Backlog / Prossimi (P1/P2)
+- P1: Ricerca avanzata catalogo (prezzo/mq/locali), notifica email agente su nuovo lead (Resend), vista agenda settimanale drag&drop.
+- P2: Dossier PDF brandizzato per immobile, heatmap quartieri sulla mappa, salvataggio immobili preferiti lato utente reale, upload foto via object storage.

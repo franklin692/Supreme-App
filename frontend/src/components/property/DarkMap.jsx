@@ -18,7 +18,7 @@ export const DarkMap = ({ markers = [], center = [40.6418, 15.8086], zoom = 13, 
     <div className="rounded-2xl overflow-hidden border border-gold/25 gold-glow" style={{ height }} data-testid="dark-map">
       <MapContainer center={center} zoom={zoom} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false}>
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          url="https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; OpenStreetMap &copy; CARTO'
         />
         {neighborhoods.map((n, i) => (
