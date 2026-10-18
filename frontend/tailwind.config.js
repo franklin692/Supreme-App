@@ -20,9 +20,9 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)'
       },
       colors: {
-        gold: '#D4AF37',
-        amber: '#F59E0B',
-        emerald: '#10B981',
+        gold: 'var(--sh-gold)',
+        amber: 'var(--sh-amber)',
+        emerald: 'var(--sh-emerald)',
         obsidian: '#0A0D14',
         night: '#111622',
         background: 'hsl(var(--background))',

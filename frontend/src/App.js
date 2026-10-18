@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeInjector } from "@/components/common/ThemeInjector";
 import { Layout } from "@/components/layout/Layout";
 import Hub from "@/pages/Hub";
 import Immobili from "@/pages/Immobili";
@@ -18,6 +19,7 @@ import VipPage from "@/pages/VipPage";
 function App() {
   return (
     <AuthProvider>
+      <ThemeInjector />
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>

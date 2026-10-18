@@ -748,8 +748,19 @@ async def seed():
     if await db.faq.count_documents({}) == 0:
         await db.faq.insert_many([{**dict(f), "id": str(_uuid.uuid4())} for f in SEED_FAQ])
 
-    if await db.settings.count_documents({}) == 0:
+    existing_settings = await db.settings.find_one({"id": "site"}, {"_id": 0})
+    if existing_settings is None:
         await db.settings.insert_one(dict(SEED_SETTINGS))
+    else:
+        # Non-destructive backfill: add any missing default keys, merge theme defaults.
+        updates = {}
+        for k, v in SEED_SETTINGS.items():
+            if k in ("id", "theme"):
+                continue
+            if k not in existing_settings:
+                updates[k] = v
+        updates["theme"] = {**SEED_SETTINGS["theme"], **(existing_settings.get("theme") or {})}
+        await db.settings.update_one({"id": "site"}, {"$set": updates})
 
 
 @app.on_event("startup")

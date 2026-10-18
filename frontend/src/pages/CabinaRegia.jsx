@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Rocket, Map, Settings2, Crown, UserCog, Mail, DatabaseBackup, HelpCircle, FileText, Plug, ArrowLeft, LogOut } from "lucide-react";
+import { Rocket, Map, Settings2, Crown, UserCog, Mail, DatabaseBackup, HelpCircle, FileText, Plug, ArrowLeft, LogOut, Palette } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 import { HypeSection } from "@/components/dashboard/HypeSection";
@@ -10,6 +10,7 @@ import { VipSection } from "@/components/dashboard/VipSection";
 import { UsersSection } from "@/components/dashboard/UsersSection";
 import { BackupSection, NewsletterSection } from "@/components/dashboard/AdminExtraSections";
 import { FaqSection, SettingsSection, ConfigSection } from "@/components/dashboard/ContentSections";
+import { ThemeSection } from "@/components/dashboard/ThemeSection";
 
 export default function CabinaRegia() {
   const { user, loading, logout } = useAuth();
@@ -23,6 +24,9 @@ export default function CabinaRegia() {
   if (loading || !user) return <div className="py-20 text-center text-neutral-500">Caricamento Cabina di Regia...</div>;
 
   const groups = [
+    { title: "Aspetto & Tema", items: [
+      { id: "theme", label: "Aspetto & Tema", icon: Palette },
+    ]},
     { title: "Contenuti & Editoriale", items: [
       { id: "settings", label: "Contenuti Sito", icon: FileText },
       { id: "site", label: "Ticker · Statistiche · Servizi · Bacheca", icon: Settings2 },
@@ -42,6 +46,7 @@ export default function CabinaRegia() {
   ];
 
   const Section = {
+    theme: ThemeSection,
     settings: SettingsSection, site: SiteSection, faq: FaqSection, region: RegionSection,
     hype: HypeSection, vip: VipSection, newsletter: NewsletterSection,
     config: ConfigSection, users: UsersSection, backup: BackupSection,

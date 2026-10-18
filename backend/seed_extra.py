@@ -1,4 +1,4 @@
-"""Extra seed data: FAQ + editable site settings."""
+"""Extra seed data: FAQ + editable site settings (content + theme)."""
 
 SEED_FAQ = [
     {"order": 1, "active": True,
@@ -21,6 +21,22 @@ SEED_FAQ = [
      "answer": "Gli immobili con lo scudo dorato 'Pre-Verificato Supreme House' hanno visura ipotecaria e catastale controllate, planimetria e conformità verificate dallo Studio Tecnico Partner e idoneità mutuo/rendita certificata."},
 ]
 
+# Default editable theme (brand look). Managed from Cabina di Regia -> Aspetto & Tema.
+DEFAULT_THEME = {
+    "mode": "light",
+    "color_gold": "#BE9E5E",          # primary / accent (gold)
+    "color_gold_strong": "#A5823F",   # heading gradient / strong gold text
+    "color_ink": "#16150F",           # dark buttons / ink
+    "color_bg": "#F6F4EE",            # page background
+    "color_surface": "#FFFFFF",       # cards / panels
+    "color_text": "#16150F",          # body text
+    "color_emerald": "#10B981",       # positive / live accent
+    "color_amber": "#F59E0B",         # warning / highlight accent
+    "font_display": "Sora",           # headings
+    "font_body": "Manrope",           # body text
+    "radius": 20,                      # card corner radius (px)
+}
+
 SEED_SETTINGS = {
     "id": "site",
     "brand_name": "SUPREME HOUSE",
@@ -34,4 +50,5 @@ SEED_SETTINGS = {
     "agency_phone": "+390971000000",
     "agency_whatsapp": "+390971000000",
     "footer_desc": "Hub immobiliare moderno: servizi, property management, aste e intermediazione d'élite. Sede a Potenza, operatività in tutta la Basilicata.",
+    "theme": DEFAULT_THEME,
 }
