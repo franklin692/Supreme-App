@@ -104,6 +104,7 @@ body::before {
 
 /* ---- Leaflet dark map ---- */
 .leaflet-container { background: #0d1017; font-family: 'Manrope', sans-serif; }
+.leaflet-tile { filter: invert(1) hue-rotate(185deg) brightness(0.95) contrast(0.92) saturate(0.75); }
 .leaflet-popup-content-wrapper { background: #14171e; color: #f3f1ea; border: 1px solid rgba(181,147,78,0.4); border-radius: 16px; box-shadow: 0 16px 40px rgba(0,0,0,0.5); padding: 0; overflow: hidden; }
 .leaflet-popup-content { margin: 0; width: 240px !important; }
 .leaflet-popup-tip { background: #14171e; }

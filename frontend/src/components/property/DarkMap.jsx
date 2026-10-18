@@ -38,8 +38,8 @@ export const DarkMap = ({ markers = [], center = [40.6418, 15.8086], zoom = 13, 
     <div className="rounded-2xl overflow-hidden" style={{ height, border: "1px solid rgba(181,147,78,0.3)" }} data-testid="dark-map">
       <MapContainer center={center} zoom={zoom} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false}>
         <TileLayer
-          url="https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; OpenStreetMap &copy; CARTO'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; OpenStreetMap contributors'
         />
         {neighborhoods.filter((n) => n.lat).map((n, i) => (
           <Circle key={`c-${i}`} center={[n.lat, n.lng]} radius={560}

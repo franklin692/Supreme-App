@@ -1,0 +1,37 @@
+{
+  "summary": "Iteration 3 full regression + new features. BACKEND: 52/52 pytest tests PASS (34 original + 8 iter-2 backup/newsletter + 10 new iter-3 FAQ/Settings/Config/RegisterUserOnly). All new endpoints work: GET /api/faq returns 6 seeded; admin CRUD POST/PUT/DELETE /api/admin/faq enforces admin (agent→403); GET /api/content/settings returns site settings; PUT /api/admin/settings persists; GET+CRUD /api/admin/config works and agent is 403; /api/auth/register ignores role param and always creates role='user'. FRONTEND verified: (1) Home FAQ 'Domande frequenti' section renders, faq-0 accordion expands showing answer text (295 chars). (2) /accedi REGISTRATI tile shows NO role selector; reg-name/reg-username/reg-password/reg-submit all present. (3) Admin login → /dashboard shows ONLY agent tabs (dash-tab-agenda/leads/properties) + prominent 'Cabina di Regia' button (open-cabina-btn). Admin-specific tabs (users/newsletter/backup) correctly REMOVED from /dashboard. (4) Clicking open-cabina-btn navigates to /cabina-di-regia; ALL 10 cabina sidebar tabs present and work: settings, site, faq, region, hype, vip, newsletter, config, users, backup. FAQ create (faq-new → faq-q/faq-a/faq-save) succeeded. Settings save shows 'Contenuti salvati' toast. Config section has config-new button. Hype has global-boost-btn. (5) Agent login (agente/agente123) → /dashboard shows NO open-cabina-btn; direct GET /cabina-di-regia correctly redirects to /accedi. CRITICAL BUG: On /immobili → 'Apri Mappa Interattiva', the dark map tiles display 'API KEY REQUIRED' watermark (visible across all tiles — see screenshot). The CartoDB basemap endpoint https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png now serves API-KEY-watermarked tiles as of 2026 — CARTO requires a free API key for all raster tile requests (confirmed via web_search). The main agent's earlier verification 'curl 200' only confirmed HTTP 200 but did not inspect the tile image content (which is the watermarked placeholder PNG). Popup minicard flow itself works (clicking a gold marker opens the mini-card with image/ref/title/price and 'Vedi annuncio' button, which navigates to /immobili/{id}).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "DarkMap (/immobili → Apri Mappa Interattiva)", "issue": "Dark tiles show 'API KEY REQUIRED' watermark across the entire map. CartoDB dark_all basemap now requires an API key as of 2026 (free registration at carto.com/basemaps/apikey). The URL https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png returns HTTP 200 but delivers watermarked placeholder PNGs. Fix options: (a) register for a free CARTO API key and append ?api_key=... to the tile URL, (b) switch to a no-key dark provider (none mainstream in 2026), or (c) use standard OSM tiles with CSS filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9) on .leaflet-tile for a pseudo-dark effect.", "selector": "[data-testid='map-wrap']", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_backup_newsletter.py",
+    "/app/backend/tests/test_iter3_new.py",
+    "/app/test_reports/pytest/iter3_all.xml",
+    "/app/test_reports/pytest/iter3_new.xml"
+  ],
+  "action_items": [
+    "Replace CartoDB dark_all tile URL in /app/frontend/src/components/property/DarkMap.jsx (line 41) because it now serves 'API KEY REQUIRED' watermark tiles. Recommended fix: either (a) obtain a free CARTO basemap API key and append it to the URL, or (b) swap to OpenStreetMap standard tiles (https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png) and achieve the dark look via CSS filter on .leaflet-tile."
+  ],
+  "critical_code_review_comments": [
+    "DarkMap tile URL hard-codes a provider that silently degraded to watermarked tiles — add an onError/onTileError Leaflet handler and/or a visual test that reads tile PNG pixels to catch future provider changes.",
+    "Previous iteration verified only HTTP 200 for the tile URL — this is insufficient; CARTO returns 200 with a watermarked PNG when no key is given. Add a response-body check or a Playwright pixel assertion to the regression suite.",
+    "/api/auth/register silently coerces role to 'user' when a role param is sent — acceptable, but consider returning 400 if a non-'user' role is submitted so clients cannot assume they created an admin.",
+    "Carried-over from iter 2: /api/admin/backup/import uses delete_many + insert_many without a transaction; blind $set in several PUT endpoints; deprecated @app.on_event startup."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter3_new.py (new)"
+  ],
+  "success_rate": {"backend": "100% (52/52 pytest)", "frontend": "~95% (all iter-3 features work; map tile provider shows API-KEY watermark — HIGH-priority bug)"},
+  "test_credentials": "admin/admin123 (admin), agente/agente123 (agent), demo-login roles user|bnb_owner|condomino|collaborator|agent|admin",
+  "seed_data_creation": "A few TEST_* FAQ, TEST_UI FAQ, TEST_Integration config entries created during tests. The settings hero_title was temporarily overwritten and RESTORED to 'Il tuo immobile vale di più. Noi lo dimostriamo.' via a direct admin API call before finishing.",
+  "retest_needed": true,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "The ONLY outstanding bug is the DarkMap tile provider (CartoDB dark_all now key-gated). Everything else — FAQ, Settings, Config, Cabina di Regia separation, admin/agent role gating on /cabina-di-regia, register-only-user, modern theme — works end-to-end. Once DarkMap.jsx is patched, re-run /immobili → open-map-btn and verify: (a) no 'API KEY' watermark text in rendered tiles, (b) at least 10 leaflet-tile-loaded images, (c) clicking a gold marker still opens the popup minicard with 'Vedi annuncio'. The test for watermark must inspect visual pixel content or compare tile byte size (watermarked tile ~2.5KB vs real tile usually >5KB), not just HTTP 200.",
+  "rca of the issue": "ROOT CAUSE — CartoDB basemap policy change (2026): CARTO now requires a free API key for ALL raster basemap tile requests. Requests without a key return HTTP 200 but with a 256x256 placeholder PNG that is rubber-stamped 'API KEY REQUIRED' and 'carto.com/basemaps/apikey'. Main agent's verification `curl ... 200` passed because it checked status only. REPRODUCTION: (1) go to /immobili, (2) click 'Apri Mappa Interattiva', (3) observe watermarked tiles. VISUAL EVIDENCE captured at /tmp/map.png during this iteration. MITIGATION: see action_items — swap tile URL in DarkMap.jsx line 41."
+}
