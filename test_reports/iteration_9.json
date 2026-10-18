@@ -1,0 +1,19 @@
+{
+  "summary": "Regression test (frontend-only) after visual restyle. All critical flows verified: HOME sections (featured, buyers, neighborhoods, poles, stats, concluded, faq, network) render with 7 PropertyCards; CATALOG shows 7 cards with working sale/quick filters (vendita filter -> 4 results) and map toggle; property detail page loads correctly with gallery/price/CTA; CHI CERCA request dialog opens; SERVIZI grid shows 9 service cards clickable to detail; LEAD dialog from hero advisor CTA submits successfully (POST /api/leads -> 200); Admin login (admin/admin123) works and Cabina di Regia loads all panels (Aspetto&Tema, Sezioni Home, Menu&Logo, Footer, Pagine&SEO, Media, Contenuti Sito, etc. - 16 tabs) with no errors; mobile 390px shows NO horizontal overflow on Home or Catalog. ZERO console errors across all tested pages.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (frontend-only)", "frontend": "100%"},
+  "test_credentials": "admin / admin123 (works)",
+  "seed_data_creation": "None - test lead was submitted to /api/leads (saved as lead, no WhatsApp sent per note). No permanent changes to Cabina.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Visual restyle regression is clean. PropertyCard new design (4:3, price overlay, mq/camere/bagni icons) renders correctly on desktop and mobile. All data-testid preserved: hub-prop-<i>, cat-prop-<i>, sale-vendita, sale-affitto, quick-asta, quick-offmarket, quick-conclusa, open-map-btn, insert-request-btn, choose-login, role-admin, login-username/password/submit. Lead dialog has 2 inputs on hero advisor CTA (nome + telefono/email) and submits via POST /api/leads returning 200."
+}

@@ -97,6 +97,8 @@ Obiettivo utente: rendere gestibile dalla Cabina di Regia TUTTO il sito (contenu
 ## Cabina di Regia — pannelli attuali
 Aspetto & Tema | Sezioni Home | Menu & Logo | Footer & Contatti | Pagine & SEO | Libreria Media | Contenuti Sito | Ticker/Stat/Servizi/Bacheca | FAQ | Quartieri & Poli | Hype | Link VIP | Newsletter | Integrazioni | Utenti | Backup.
 
-### FASE 4 — VERIFICA FINALE COMPLETATA (2026-10-18)
-- Test combinato iteration_8.json: frontend 100%. Confermata NON-INTERFERENZA del merge `$set` (5 pannelli diversi modificati nella stessa sessione coesistono tutti dopo reload). Default ripristinati e verificati.
-- Matrice di copertura finale: tutte le aree pubbliche principali sono gestibili dalla Cabina. Elementi residui classificati come tecnici/minori (non-admin): chip valoriali statiche in ServiceDetail, copy fisse dei moduli off-market, demo B&B hardcoded (demo visiva). Nessun contenuto admin primario resta hardcoded.
+### RESTYLING VISIVO — COMPLETATO (2026-10-18)
+- Sistema grafico unificato in `index.css`: scala tipografica più leggibile (body 16px/1.6), contrasti migliorati (muted-foreground più scuro), ombre a più livelli su `.glass`/`.glass-gold`, bottoni premium (`.metallic` con sheen oro + ombra, `.btn-dark` con ombra), `::selection` oro. Tutto ancora guidato dalle variabili `--sh-*` (tema admin intatto).
+- `PropertyCard` ridisegnata (condivisa catalogo/home/ricerca): immagine 4:3 coerente senza deformazioni, overlay scuro leggibile, badge ordinati, chip RIF leggibile, pill views/shares/online con testo chiaro, riga meta mq/locali/bagni con icone, prezzo in evidenza (font-display), chip "Verificato". Coerente con dettaglio immobile (StatusBadge condiviso).
+- `SectionTitle` (sottotitolo text-lg neutral-600) e `StatusBadge` (shadow) raffinati.
+- Test regressione iteration_9.json: frontend 100%, ZERO errori console, nessun overflow mobile a 390px, tutte le funzionalità preservate (navigazione, filtri, dialog lead, dettaglio, servizi, Cabina 16 pannelli).
