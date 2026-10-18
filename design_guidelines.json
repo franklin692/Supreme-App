@@ -1,125 +1,117 @@
 {
-  "theme": "Private Banking Luxury Dark Mode",
+  "project_name": "Supreme House Immobiliare - Restyling",
+  "theme": "hybrid_fullstack (Real Estate Platform + CMS Admin)",
+  "emotion": "Luxury, Authority, Clean, Premium, Technologically Advanced",
+  "colors": {
+    "strategy": "Archetype 5 (Luxury) mixed with Archetype 4 (High-Contrast). The palette is defined by runtime CSS variables (--sh-*) from the DB. Do not hardcode hex colors that overwrite these.",
+    "primary": "var(--sh-ink) for deepest darks, var(--sh-gold) for premium accents.",
+    "backgrounds": "var(--sh-bg) for Ivory/White base, var(--sh-surface) for cards and isolated elements.",
+    "text": "var(--sh-text) for body copy. Ensure high contrast against var(--sh-bg) and var(--sh-surface).",
+    "status": {
+      "success": "var(--sh-emerald) for verified/success badges.",
+      "warning": "var(--sh-amber) for pending/auction states."
+    },
+    "rules": [
+      "DO NOT use raw hex codes for primary UI colors. Always use standard tailwind classes mapped to these variables (e.g., bg-sh-bg, text-sh-text, text-sh-gold) assuming tailwind is configured for them, or use style={{ color: 'var(--sh-gold)' }} if strictly dynamic.",
+      "Use gold accents sparingly. It must feel like an accent (buttons, icons, gradients), not a dominant background.",
+      "Never use pure black or pure white if the variables provide tinted versions.",
+      "Use existing classes: .glass, .glass-gold, .metallic, .btn-dark, .text-gold-gradient, .hover-lift, .chip, .pill-dark."
+    ]
+  },
   "typography": {
+    "strategy": "Oversized, editorial typography for headlines. High legibility for data and secondary text.",
     "fonts": {
-      "headings": "Playfair Display",
-      "body": "Manrope",
-      "mono": "JetBrains Mono"
+      "display": "var(--sh-font_display) (Currently Sora) - Use for H1, H2, H3, large numbers.",
+      "body": "var(--sh-font_body) (Currently Manrope) - Use for body text, descriptions, labels, and microcopy."
     },
     "scale": {
-      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tighter",
-      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight",
-      "h3": "text-xl sm:text-2xl tracking-tight",
-      "body": "text-base leading-relaxed",
-      "labels": "text-xs uppercase tracking-[0.2em]"
-    }
+      "h1": "text-5xl sm:text-6xl tracking-tighter leading-none",
+      "h2": "text-3xl sm:text-4xl tracking-tight",
+      "h3": "text-2xl sm:text-3xl",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-base leading-relaxed text-sh-text/90",
+      "small": "text-sm text-sh-text/70",
+      "overline": "text-xs uppercase tracking-[0.2em] text-sh-gold font-bold"
+    },
+    "rules": [
+      "Fix small text: Minimum font size for secondary info should be text-sm, never smaller unless strictly decorative.",
+      "Ensure hierarchy: Prices should be prominent (e.g., text-2xl font-display text-sh-ink), while labels (sqm, rooms) use body font in text-sm.",
+      "Avoid default Inter/Roboto.",
+      "Use .text-gold-gradient for high-impact hero texts."
+    ]
   },
-  "colors": {
-    "background": {
-      "primary": "#0A0D14",
-      "secondary": "#111622",
-      "glass": "rgba(17, 22, 34, 0.7)"
+  "layouts": {
+    "strategy": "Mobile-first, asymmetrical, generous whitespace, cinematic feel.",
+    "spacing": "Use p-6, p-8, p-12 for breathing room. Avoid cramped layouts.",
+    "hero": "Single-purpose, high impact. Large cinematic image/video, bold typography, clear CTA. Not a cluttered list of blocks.",
+    "catalog_grids": "Use 1-col on mobile, 2-col on tablet, 3-col on desktop (grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8).",
+    "bento_grids": "For Home sections and Admin (Cabina di Regia), use bento layouts to avoid monotonous lists.",
+    "navigation": "Sticky top navbar (glassmorphism: backdrop-blur-xl bg-sh-bg/80 border-b border-sh-ink/10). Bottom-nav for mobile. Fixed elements must not cover content (add proper padding to main container)."
+  },
+  "components": {
+    "property_card": {
+      "container": "Rounded to var(--sh-radius), bg-sh-surface, overflow-hidden, subtle shadow-sm hover:shadow-xl transition-all duration-300 .hover-lift",
+      "image": "aspect-[4/3] object-cover w-full, absolutely no distortion. Ensure high-quality rendering.",
+      "badges": "Absolute positioned over image. Use .chip or .pill-dark for 'Sale', 'Rent', 'Auction'. var(--sh-amber) for auctions, var(--sh-emerald) for verified.",
+      "content": "p-5 flex flex-col gap-2",
+      "title_location": "H4 font-display text-sh-ink truncate, accompanied by text-sm text-sh-text/70 for location.",
+      "features": "Flex row, gap-4, text-sm. Use consistent icons (lucide-react) for beds, baths, sqm.",
+      "price_action": "Flex justify-between items-center mt-2. Price in H3. Action button (.metallic or .btn-dark)."
     },
-    "accents": {
-      "gold": "#D4AF37",
-      "amber": "#F59E0B",
-      "emerald": "#10B981"
+    "buttons": {
+      "primary": ".metallic (gold accent) or .btn-dark (ink accent) with distinct hover states. Must have clear contrast.",
+      "states": "Add hover, focus, active, and disabled states. Add slight scale-down on active (active:scale-95)."
     },
-    "text": {
-      "primary": "#F3F4F6",
-      "secondary": "#9CA3AF",
-      "muted": "#6B7280"
+    "forms_and_filters": {
+      "inputs": "bg-transparent border border-sh-ink/20 rounded-[var(--sh-radius)] focus:border-sh-gold focus:ring-1 focus:ring-sh-gold transition-all.",
+      "labels": "text-sm font-medium text-sh-ink mb-1.5 block."
     },
-    "borders": {
-      "gold_translucent": "rgba(212, 175, 55, 0.3)",
-      "amber_translucent": "rgba(245, 158, 11, 0.3)",
-      "subtle": "rgba(255, 255, 255, 0.1)"
+    "admin_dashboard": {
+      "layout": "Dense but clean. grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6.",
+      "cards": "Flat, 1px border border-sh-ink/10, bg-sh-surface."
     }
   },
   "visual_enhancers": {
-    "glassmorphism": {
-      "surface": "backdrop-blur-xl bg-[#111622]/70",
-      "border": "border border-[#D4AF37]/30",
-      "shadow": "shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-    },
-    "metallic_badges": "bg-gradient-to-br from-[#D4AF37] to-[#F59E0B] text-black font-bold shadow-[0_0_15px_rgba(212,175,55,0.5)]",
-    "glow_effects": "drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"
-  },
-  "components": {
-    "wall_street_ticker": "Marquee with JetBrains Mono font, emerald green numbers for positive trends, small gold icons. Slow and elegant.",
-    "bottom_nav_mobile": "Fixed bottom, 5 tabs, glassmorphism background, gold active icon, #9CA3AF inactive.",
-    "top_nav_desktop": "Sticky top, glassmorphism, right-aligned luxury links, gold CTA button for 'Accedi'.",
-    "property_card": "Dark glass card. Blurred off-market image if locked (gold padlock icon). Metallic status badge (ESCLUSIVA). Price with slashed old price.",
-    "animated_counters": "Use Framer Motion to count up (e.g., +14.5M€). JetBrains Mono or Playfair Display with gold accent.",
-    "buttons": "Pill-shaped or sharp-edged. Primary: Gold gradient background with black text. Secondary: Transparent with thin gold border and gold text.",
-    "interactive_map": "Leaflet with CartoDB Dark Matter tiles. Gold custom SVG pins.",
-    "before_after_slider": "Draggable slider for property transformation."
-  },
-  "grids": {
-    "bento_marketing": "grid-cols-1 md:grid-cols-12 gap-6. Hero takes col-span-12, side stats take col-span-4, charts col-span-8.",
-    "property_grid": "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-  },
-  "layouts": {
-    "spacing": "Generous spacing. p-6 or p-8 inside cards. Section gaps py-24.",
-    "alignment": "Left-aligned for data and property details. Centered for hero text to emphasize authority."
-  },
-  "motion": {
-    "hover_states": "Cards lift slightly (-translate-y-1) and glow increases (border-[#D4AF37]/60).",
-    "page_transitions": "Fade in and slide up (opacity 0 -> 1, y 20 -> 0).",
-    "ticker": "Continuous smooth horizontal scroll."
+    "borders_shadows": "Moderate. Use 1px subtle borders (border-sh-ink/10). Shadows should be soft, ambient (shadow-sm, hover:shadow-lg).",
+    "glassmorphism": ".glass and .glass-gold for sticky navs, floating action bars, and overlays. Ensure 1px inner border for optical clarity.",
+    "motion": "Framer motion for page transitions, stagger effects on lists (catalog), subtle hover-lifts on cards.",
+    "icons": "Use lucide-react. Stroke width 1.5 for elegance.",
+    "micro_interactions": "Loading states (skeletons), empty states (well-designed with illustration/icon and CTA), clear error messages with var(--sh-amber)."
   },
   "accessibility": {
-    "contrast": "Ensure text on dark backgrounds has at least 4.5:1 ratio. Gold on black is excellent.",
-    "focus": "focus:ring-2 focus:ring-[#D4AF37] focus:outline-none"
+    "contrast": "Strict adherence to text contrast against backgrounds. Avoid text-sh-text/50 if unreadable, use /70 minimum.",
+    "touch_targets": "Minimum 44x44px for mobile buttons and icons (bottom-nav).",
+    "testing": "All interactive elements MUST include data-testid (e.g., data-testid='property-card-1', data-testid='contact-submit-btn')."
   },
-  "media": {
-    "image_urls": [
-      {
-        "url": "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjByZWFsJTIwZXN0YXRlJTIwZXh0ZXJpb3IlMjBldmVuaW5nfGVufDB8fHx8MTc5MjMzNjg4OHww&ixlib=rb-4.1.0&q=85",
-        "category": "Hero Background / Exclusive Property",
-        "description": "Luxurious illuminated concrete house at evening."
-      },
-      {
-        "url": "https://images.pexels.com/photos/8135492/pexels-photo-8135492.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        "category": "Property Interior",
-        "description": "Spacious modern living room featuring elegant chandeliers."
-      },
-      {
-        "url": "https://images.unsplash.com/photo-1707232400083-7c2fe027fc02?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHxpdGFseSUyMHBvdGVuemElMjBjaXR5JTIwc3Vuc2V0fGVufDB8fHx8MTc5MjMzNjg4OHww&ixlib=rb-4.1.0&q=85",
-        "category": "Location / Potenza Vibe",
-        "description": "Italian town nestled on a mountain side at sunset."
-      },
-      {
-        "url": "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwzfHxmaW5hbmNpYWwlMjBjaGFydCUyMGRhc2hib2FyZCUyMGRhcmt8ZW58MHx8fHwxNzkyMzM2ODg4fDA&ixlib=rb-4.1.0&q=85",
-        "category": "B&B Dashboard / Finance Chart",
-        "description": "Dark mode financial monitoring screen."
-      }
-    ],
-    "map_tiles": "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+  "image_urls": {
+    "hero_exterior": {
+      "url": "https://images.unsplash.com/photo-1706808849780-7a04fbac83ef?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBtb2Rlcm4lMjB2aWxsYSUyMGV4dGVyaW9yfGVufDB8fHx8MTc5MjM0NzgwNnww&ixlib=rb-4.1.0&q=85",
+      "description": "Luxury modern villa with pool, suitable for Hero section."
+    },
+    "interior_apartment": {
+      "url": "https://images.unsplash.com/photo-1757924461488-ef9ad0670978?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwzfHxlbGVnYW50JTIwbW9kZXJuJTIwYXBhcnRtZW50JTIwaW50ZXJpb3J8ZW58MHx8fHwxNzkyMzQ3ODA2fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Elegant modern living room for interior detail view."
+    },
+    "agent_portrait": {
+      "url": "https://images.unsplash.com/photo-1770199105692-9e52ff137cad?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwcmVhbCUyMGVzdGF0ZSUyMGFnZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkyMzQ3ODA2fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Premium real estate agent portrait for 'Chi Cerca' or contact sections."
+    },
+    "premium_exterior_2": {
+      "url": "https://images.pexels.com/photos/16573669/pexels-photo-16573669.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Stunning modern villa with cars, good for catalog premium listing."
+    }
   },
-  "3d_libraries": {
-    "recommendation": "Framer Motion for layout and micro-interactions. React Leaflet for the dark mode map. React Fast Marquee for the Wall Street ticker. Recharts for the B&B Dashboard charts."
-  },
-  "instructions_to_main_agent": [
-    "Build a premium dark-mode application using React and Tailwind CSS.",
-    "Strictly adhere to the dark backgrounds (#0A0D14 and #111622) and gold/amber accents.",
-    "Implement the Wall Street ticker at the very top using 'react-fast-marquee'.",
-    "Use Playfair Display for headings and Manrope for body text.",
-    "Construct the 5-tab navigation (Hub, Immobili, Chi Cerca, Servizi, Accedi). Mobile should have a fixed bottom nav; desktop a premium top nav.",
-    "In the Home Hub: Include Hero with 'Prenota Private Advisor' modal, 'Chi Cerca Casa Ora' carousel, 'Più Visti' properties, B&B Dashboard Demo (using Recharts), Potenza Neighborhoods ranking, 6 Basilicata Hubs, 6 animated counters, and 'Operazioni Concluse'.",
-    "For property cards: Use the specified glassmorphism classes. Include Off-Market blurred states with a gold padlock.",
-    "For the Property Detail page: Include RIF code, hype counters, 'In Osservazione Ora' pill, dynamic status labels, slashed price badge, Before/After slider, 'Iper-Potentini' badge, expense thermometer, Pre-Verificato gold shield, Advisor Note box, and a blurred floorplan with padlock.",
-    "Implement Leaflet map with CartoDB dark tiles.",
-    "Ensure all interactive elements have data-testid attributes.",
-    "Use Lucide React or Phosphor Icons for iconography. Add thin gold strokes to icons where appropriate."
-  ],
   "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
     "Do not use generic centered layouts or simplistic gradients.",
-    "Create depth through layered design elements with z-index hierarchy.",
-    "Use glassmorphism effects with backdrop filters (12-24px blur).",
-    "Never use AI assistant emoji characters like 🤖🧠💭💡🔮🎯.",
-    "Every interaction needs micro-animations - hover states, transitions, etc.",
-    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
-    "Do not apply universal transition 'transition: all'."
+    "Implement glass-morphism effects using backdrop-blur (12-24px) for sticky headers and overlays.",
+    "NEVER apply 'transition: all' universally.",
+    "Avoid using emoji characters like 🤖 or 🏠 for icons; use lucide-react exclusively.",
+    "Ensure generous spacing (p-6 to p-12) to maintain the premium feel.",
+    "Use layered z-index hierarchy to create depth, especially for sticky CTA bars (property detail) and floating navs.",
+    "Map all UI colors to the provided CSS variables (--sh-bg, --sh-surface, --sh-ink, --sh-gold). The app will inject these dynamically.",
+    "Ensure 'mobile-first' responsiveness. Images shouldn't stretch or compress awkwardly.",
+    "Keep typography scales consistent; no tiny, unreadable labels.",
+    "Use framer-motion for page transitions and micro-interactions.",
+    "Add data-testid to every interactive component."
   ]
 }

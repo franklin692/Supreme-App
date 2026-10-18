@@ -9,14 +9,14 @@ export const SectionTitle = ({ eyebrow, title, subtitle, align = "left", classNa
         <span className="text-xs uppercase tracking-[0.3em] text-gold font-medium">{eyebrow}</span>
       </div>
     )}
-    <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900">{title}</h2>
-    {subtitle && <p className="mt-4 text-muted-foreground text-base leading-relaxed">{subtitle}</p>}
+    <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.08]">{title}</h2>
+    {subtitle && <p className="mt-4 text-neutral-600 text-base sm:text-lg leading-relaxed">{subtitle}</p>}
   </div>
 );
 
 export const StatusBadge = ({ label, className }) => (
   <span className={cn(
-    "inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold tracking-tight metallic whitespace-nowrap",
+    "inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold tracking-tight metallic whitespace-nowrap shadow-sm",
     className
   )}>
     {label}
