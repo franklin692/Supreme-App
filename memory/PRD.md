@@ -38,6 +38,14 @@ Build 1.0 completa della Web App + Piattaforma Gestionale per "SUPREME HOUSE": h
 ## Testing
 - Backend: 34/34 pytest PASS. Frontend: ~95% (tutti i flussi verificati dal testing agent; tile mappa spostati su CartoDB key-free verificato 200).
 
+## Iterazione 2 (2026-10-18) — Restyle chiaro + feature
+- Re-theme completo in LIGHT luxury (avorio/oro/nero) come sito di riferimento: index.css (card bianche, .metallic oro, .btn-dark), flip className dark→light su tutti i componenti (Ticker e /vip restano scuri di proposito). Hero con card nera "Creiamo Valore".
+- Scheda immobile ridisegnata (ricca e grafica): gallery con dots, pill RIF+status, prezzo grande, griglia 6 feature card, Descrizione+Nota Advisor, Caratteristiche checklist, Iper-Potentini, scudo, planimetria sfocata sbloccabile, mappa Posizione, barra CTA sticky (Richiedi info + WhatsApp + telefono).
+- Mappa: provider OpenStreetMap key-free (risolto "API KEY REQUIRED"). 18 tile caricate, nessuna chiave.
+- Admin: sezione Backup (export JSON / import ripristino) — endpoint /api/admin/backup/export|import.
+- Newsletter: form nel footer + endpoint /api/newsletter + sezione admin elenco iscritti.
+- Testing agent iter2: backend 42 test PASS, frontend 100%, bug mappa confermato risolto.
+
 ## Backlog / Prossimi (P1/P2)
 - P1: Ricerca avanzata catalogo (prezzo/mq/locali), notifica email agente su nuovo lead (Resend), vista agenda settimanale drag&drop.
 - P2: Dossier PDF brandizzato per immobile, heatmap quartieri sulla mappa, salvataggio immobili preferiti lato utente reale, upload foto via object storage.
