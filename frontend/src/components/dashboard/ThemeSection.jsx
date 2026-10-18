@@ -37,6 +37,14 @@ export const ThemeSection = () => {
   // Live preview while editing (applies to the whole site instantly)
   useEffect(() => { applyTheme(t); }, [t]);
 
+  // On leaving the panel without saving, restore the persisted theme (avoid stale preview)
+  useEffect(() => {
+    return () => {
+      const persisted = qc.getQueryData(["settings"])?.theme;
+      applyTheme(persisted || DEFAULT_THEME);
+    };
+  }, [qc]);
+
   const set = (k, v) => setT((p) => ({ ...p, [k]: v }));
 
   const save = async () => {

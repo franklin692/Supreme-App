@@ -57,3 +57,21 @@ Build 1.0 completa della Web App + Piattaforma Gestionale per "SUPREME HOUSE": h
 ## Backlog / Prossimi (P1/P2)
 - P1: Ricerca avanzata catalogo (prezzo/mq/locali), notifica email agente su nuovo lead (Resend), vista agenda settimanale drag&drop.
 - P2: Dossier PDF brandizzato per immobile, heatmap quartieri sulla mappa, salvataggio immobili preferiti lato utente reale, upload foto via object storage.
+
+## REVISIONE CMS CABINA DI REGIA — Lavoro multi-fase (avviato 2026-10-18)
+Obiettivo utente: rendere gestibile dalla Cabina di Regia TUTTO il sito (contenuti, sezioni, presentazione, SEO, media, stili/colori/font) senza codice.
+
+### Audit copertura (sintesi)
+- Già gestibile+persistente: immobili (CRUD), servizi, bacheca, ticker/stats, FAQ, hero/brand/footer-text (settings), quartieri/poli (solo edit), VIP/utenti/newsletter/backup/config.
+- Hardcoded da sistemare: Navbar (brand/menu), Footer (colonne/social/recapiti), quasi tutte le sezioni Home (titoli, card B&B, card network, badge hero, immagine), testi pagine Immobili/Servizi/ChiCerca, filtri catalogo. Mancano del tutto: editor tema/colori, SEO, media library/upload, create/delete/reorder quartieri&poli.
+
+### Piano a fasi (modalità: fase per fase, confermata dall'utente)
+- FASE 1 ✅ Tema dinamico (colori/font/raggio) editabile dalla Cabina + persistenza.
+- FASE 2 ⏳ CMS contenuti globali: Navbar/Footer dinamici, Editor Sezioni Home (mostra/nascondi, riordina, testi, card), testi pagine.
+- FASE 3 ⏳ Catalogo+Media+SEO: quartieri/poli CRUD+reorder, Media Library con UPLOAD REALE (object storage, confermato), SEO per pagina e immobile.
+- FASE 4 ⏳ Verifica reale end-to-end + testing agent completo.
+
+### FASE 1 — COMPLETATA (2026-10-18)
+- Backend: `settings.theme` (12 campi) con backfill non distruttivo su doc esistente; GET /content/settings, PUT /admin/settings ($set merge).
+- Frontend: variabili CSS `--sh-*` in index.css consumate da body/.metallic/.btn-dark/.text-gold-gradient/.glass/radius; tailwind gold/amber/emerald = var(--sh-*). `ThemeInjector` applica il tema da DB su documentElement. Pannello Cabina "Aspetto & Tema" (`ThemeSection`): color picker, font titoli/testo, slider raggio, palette rapide, anteprima live, salva/ripristina; cleanup su unmount.
+- Test: iteration_5.json — frontend 100%, persistenza E2E verificata (modifica→salva→reload Home riflette il colore; reset ai default confermato).
