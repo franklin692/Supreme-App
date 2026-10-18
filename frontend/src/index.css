@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,500&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 40% 6%;
+    --foreground: 220 14% 96%;
+    --card: 222 32% 11%;
+    --card-foreground: 220 14% 96%;
+    --popover: 222 40% 8%;
+    --popover-foreground: 220 14% 96%;
+    --primary: 45 64% 52%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 222 24% 16%;
+    --secondary-foreground: 220 14% 96%;
+    --muted: 222 20% 16%;
+    --muted-foreground: 220 9% 65%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 222 47% 6%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 40% 35%;
+    --input: 222 24% 18%;
+    --ring: 45 64% 52%;
+    --radius: 0.75rem;
+  }
+}
+
+* {
+  border-color: hsl(var(--border) / 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #0A0D14;
+  color: #F3F4F6;
+  font-family: 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Ambient radial glows on the obsidian background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(900px circle at 85% -5%, rgba(212, 175, 55, 0.10), transparent 45%),
+    radial-gradient(800px circle at 10% 10%, rgba(37, 52, 94, 0.35), transparent 45%),
+    radial-gradient(1000px circle at 50% 110%, rgba(16, 185, 129, 0.06), transparent 50%);
+  pointer-events: none;
+}
+
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ---- Glassmorphism ---- */
+.glass {
+  background: rgba(17, 22, 34, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+.glass-gold {
+  background: rgba(17, 22, 34, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(212, 175, 55, 0.08);
+}
+.hover-lift {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(212, 175, 55, 0.12);
+}
+
+/* ---- Gold text & metallic badges ---- */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F7E8A4 0%, #D4AF37 45%, #B8860B 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.metallic {
+  background: linear-gradient(135deg, #F7E8A4 0%, #D4AF37 45%, #B8860B 100%);
+  color: #0A0D14;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.45);
+}
+.gold-glow { box-shadow: 0 0 24px rgba(212, 175, 55, 0.35); }
+
+/* ---- Ticker ---- */
+.ticker-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+/* ---- Pulse dot ---- */
+.live-dot {
+  width: 8px; height: 8px; border-radius: 9999px; background: #EF4444;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  animation: livepulse 1.8s infinite;
+}
+@keyframes livepulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* ---- Shimmer for locked / off-market ---- */
+.shimmer::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(212,175,55,0.12) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: shimmer 3s infinite;
+}
+@keyframes shimmer { to { transform: translateX(100%); } }
+
+/* ---- Scrollbars ---- */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0A0D14; }
+::-webkit-scrollbar-thumb { background: #2a2f3d; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+
+/* ---- Auto marquee for carousels ---- */
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.auto-scroll { animation: scroll-x 45s linear infinite; }
+.auto-scroll:hover { animation-play-state: paused; }
+
+/* ---- Leaflet dark overrides ---- */
+.leaflet-container { background: #0A0D14; font-family: 'Manrope', sans-serif; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: rgba(17, 22, 34, 0.95); color: #F3F4F6;
+  border: 1px solid rgba(212,175,55,0.4);
+}
+.leaflet-control-zoom a { background: #111622 !important; color: #D4AF37 !important; border-color: rgba(212,175,55,0.3) !important; }
+.leaflet-bar { border: 1px solid rgba(212,175,55,0.3) !important; }
+.gold-pin {
+  width: 26px; height: 26px; border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, #F7E8A4, #D4AF37); transform: rotate(-45deg);
+  border: 2px solid #0A0D14; box-shadow: 0 0 14px rgba(212,175,55,0.6);
+}
+
+/* entrance */
+.fade-up { animation: fadeUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+[data-debug-wrapper="true"] { display: contents !important; }

@@ -1,0 +1,125 @@
+{
+  "theme": "Private Banking Luxury Dark Mode",
+  "typography": {
+    "fonts": {
+      "headings": "Playfair Display",
+      "body": "Manrope",
+      "mono": "JetBrains Mono"
+    },
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tighter",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight",
+      "h3": "text-xl sm:text-2xl tracking-tight",
+      "body": "text-base leading-relaxed",
+      "labels": "text-xs uppercase tracking-[0.2em]"
+    }
+  },
+  "colors": {
+    "background": {
+      "primary": "#0A0D14",
+      "secondary": "#111622",
+      "glass": "rgba(17, 22, 34, 0.7)"
+    },
+    "accents": {
+      "gold": "#D4AF37",
+      "amber": "#F59E0B",
+      "emerald": "#10B981"
+    },
+    "text": {
+      "primary": "#F3F4F6",
+      "secondary": "#9CA3AF",
+      "muted": "#6B7280"
+    },
+    "borders": {
+      "gold_translucent": "rgba(212, 175, 55, 0.3)",
+      "amber_translucent": "rgba(245, 158, 11, 0.3)",
+      "subtle": "rgba(255, 255, 255, 0.1)"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": {
+      "surface": "backdrop-blur-xl bg-[#111622]/70",
+      "border": "border border-[#D4AF37]/30",
+      "shadow": "shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+    },
+    "metallic_badges": "bg-gradient-to-br from-[#D4AF37] to-[#F59E0B] text-black font-bold shadow-[0_0_15px_rgba(212,175,55,0.5)]",
+    "glow_effects": "drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"
+  },
+  "components": {
+    "wall_street_ticker": "Marquee with JetBrains Mono font, emerald green numbers for positive trends, small gold icons. Slow and elegant.",
+    "bottom_nav_mobile": "Fixed bottom, 5 tabs, glassmorphism background, gold active icon, #9CA3AF inactive.",
+    "top_nav_desktop": "Sticky top, glassmorphism, right-aligned luxury links, gold CTA button for 'Accedi'.",
+    "property_card": "Dark glass card. Blurred off-market image if locked (gold padlock icon). Metallic status badge (ESCLUSIVA). Price with slashed old price.",
+    "animated_counters": "Use Framer Motion to count up (e.g., +14.5M€). JetBrains Mono or Playfair Display with gold accent.",
+    "buttons": "Pill-shaped or sharp-edged. Primary: Gold gradient background with black text. Secondary: Transparent with thin gold border and gold text.",
+    "interactive_map": "Leaflet with CartoDB Dark Matter tiles. Gold custom SVG pins.",
+    "before_after_slider": "Draggable slider for property transformation."
+  },
+  "grids": {
+    "bento_marketing": "grid-cols-1 md:grid-cols-12 gap-6. Hero takes col-span-12, side stats take col-span-4, charts col-span-8.",
+    "property_grid": "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+  },
+  "layouts": {
+    "spacing": "Generous spacing. p-6 or p-8 inside cards. Section gaps py-24.",
+    "alignment": "Left-aligned for data and property details. Centered for hero text to emphasize authority."
+  },
+  "motion": {
+    "hover_states": "Cards lift slightly (-translate-y-1) and glow increases (border-[#D4AF37]/60).",
+    "page_transitions": "Fade in and slide up (opacity 0 -> 1, y 20 -> 0).",
+    "ticker": "Continuous smooth horizontal scroll."
+  },
+  "accessibility": {
+    "contrast": "Ensure text on dark backgrounds has at least 4.5:1 ratio. Gold on black is excellent.",
+    "focus": "focus:ring-2 focus:ring-[#D4AF37] focus:outline-none"
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjByZWFsJTIwZXN0YXRlJTIwZXh0ZXJpb3IlMjBldmVuaW5nfGVufDB8fHx8MTc5MjMzNjg4OHww&ixlib=rb-4.1.0&q=85",
+        "category": "Hero Background / Exclusive Property",
+        "description": "Luxurious illuminated concrete house at evening."
+      },
+      {
+        "url": "https://images.pexels.com/photos/8135492/pexels-photo-8135492.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "Property Interior",
+        "description": "Spacious modern living room featuring elegant chandeliers."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1707232400083-7c2fe027fc02?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHxpdGFseSUyMHBvdGVuemElMjBjaXR5JTIwc3Vuc2V0fGVufDB8fHx8MTc5MjMzNjg4OHww&ixlib=rb-4.1.0&q=85",
+        "category": "Location / Potenza Vibe",
+        "description": "Italian town nestled on a mountain side at sunset."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwzfHxmaW5hbmNpYWwlMjBjaGFydCUyMGRhc2hib2FyZCUyMGRhcmt8ZW58MHx8fHwxNzkyMzM2ODg4fDA&ixlib=rb-4.1.0&q=85",
+        "category": "B&B Dashboard / Finance Chart",
+        "description": "Dark mode financial monitoring screen."
+      }
+    ],
+    "map_tiles": "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+  },
+  "3d_libraries": {
+    "recommendation": "Framer Motion for layout and micro-interactions. React Leaflet for the dark mode map. React Fast Marquee for the Wall Street ticker. Recharts for the B&B Dashboard charts."
+  },
+  "instructions_to_main_agent": [
+    "Build a premium dark-mode application using React and Tailwind CSS.",
+    "Strictly adhere to the dark backgrounds (#0A0D14 and #111622) and gold/amber accents.",
+    "Implement the Wall Street ticker at the very top using 'react-fast-marquee'.",
+    "Use Playfair Display for headings and Manrope for body text.",
+    "Construct the 5-tab navigation (Hub, Immobili, Chi Cerca, Servizi, Accedi). Mobile should have a fixed bottom nav; desktop a premium top nav.",
+    "In the Home Hub: Include Hero with 'Prenota Private Advisor' modal, 'Chi Cerca Casa Ora' carousel, 'Più Visti' properties, B&B Dashboard Demo (using Recharts), Potenza Neighborhoods ranking, 6 Basilicata Hubs, 6 animated counters, and 'Operazioni Concluse'.",
+    "For property cards: Use the specified glassmorphism classes. Include Off-Market blurred states with a gold padlock.",
+    "For the Property Detail page: Include RIF code, hype counters, 'In Osservazione Ora' pill, dynamic status labels, slashed price badge, Before/After slider, 'Iper-Potentini' badge, expense thermometer, Pre-Verificato gold shield, Advisor Note box, and a blurred floorplan with padlock.",
+    "Implement Leaflet map with CartoDB dark tiles.",
+    "Ensure all interactive elements have data-testid attributes.",
+    "Use Lucide React or Phosphor Icons for iconography. Add thin gold strokes to icons where appropriate."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do not use generic centered layouts or simplistic gradients.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glassmorphism effects with backdrop filters (12-24px blur).",
+    "Never use AI assistant emoji characters like 🤖🧠💭💡🔮🎯.",
+    "Every interaction needs micro-animations - hover states, transitions, etc.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Do not apply universal transition 'transition: all'."
+  ]
+}
