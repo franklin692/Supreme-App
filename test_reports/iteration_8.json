@@ -1,0 +1,25 @@
+{
+  "summary": "FASE 4 — VERIFICA FINALE end-to-end: non-interferenza del PUT /api/admin/settings con merge $set. In un'unica sessione admin ho modificato in sequenza 5 pannelli distinti (Aspetto&Tema -> color_gold=#FF3366; Menu&Logo -> brand='SUPREME HOUSE TEST'; Footer -> phone='+39 0971 TEST01'; Pagine&SEO -> seo-immobili-title='TEST Immobili SEO Title'; Sezioni Home -> toggle visibilità 'bnb' nascosto). Dopo reload del sito pubblico, TUTTE le 5 modifiche coesistono simultaneamente: (a) CSS var --sh-gold su documentElement = #ff3366 (bottone metallic, mappa, logo visibilmente rosa su screenshot), (b) header mostra 'SUPREME HOUSE TEST', (c) footer contiene '+39 0971 TEST01', (d) document.title di /immobili = 'TEST Immobili SEO Title', (e) la sezione bnb non appare più nella home (h2s di Hub elencano buyers/featured/neighborhoods/poles/stats/concluded/faq/network ma NON b&b/short-let). Nessuna modifica ha azzerato le altre -> merge $set confermato corretto. Successivamente ho ripristinato TUTTO ai default: tema (gold #BE9E5E, gold_strong #A5823F, ink/text #16150F, bg #F6F4EE, surface #FFFFFF, emerald #10B981, amber #F59E0B, radius 20), brand 'SUPREME HOUSE' (tagline NON toccato), footer phone vuoto (0 social presenti già), seo-immobili-title 'Immobili & Aste — Supreme House' e page-immobili-title 'Immobili, Aste e Opportunità', bnb di nuovo visibile. Verifica finale OK: --sh-gold=#be9e5e, brand='SUPREME HOUSE' senza 'TEST', phone cleared, title='Immobili & Aste — Supreme House'. SEO document.title corretto su / e /immobili. Nessun media/quartiere/polo di prova creato in questa iterazione.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Non-interference confermata lato backend: PUT /api/admin/settings fa un merge $set per campo top-level (theme/navbar/footer/seo/pages/home_order ecc.), quindi aggiornare un blocco non azzera gli altri. Comportamento corretto e già testato end-to-end.",
+    "RegionSection: lo stesso punto di iteration_7 — l'aggiunta di quartiere/polo genera row placeholder ('Nuovo Quartiere') con lat/lng/demand hardcoded; se l'utente abbandona, resta orfano. Suggerisco inline-create-with-focus o conferma.",
+    "ThemeSection: la UI espone solo i preset predefiniti e singoli color pickers; sarebbe utile un bottone 'Ripristina default' globale (già presente 'theme-reset' Predefiniti ma applica solo tema). Un reset globale su cabina ridurrebbe gli errori QA.",
+    "LayoutSections (footer): quando non ci sono social la lista è vuota ma non c'è feedback — considerare empty state con suggerimento 'Aggiungi Instagram/LinkedIn'."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a (frontend-only)", "frontend": "100% (5/5 pannelli coesistono, ripristino OK)" },
+  "test_credentials": "admin / admin123",
+  "seed_data_creation": "Nessun seed persistente — tutte le modifiche di prova sono state ripristinate ai default alla fine del test.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "FASE 4 non-interference confermata. PUT /api/admin/settings con merge $set non ha regressioni cross-pannello. Default values confermati e ripristinati: theme.color_gold=#BE9E5E, radius=20; nav.brand='SUPREME HOUSE'; footer.phone=''; seo.pages.immobili.title='Immobili & Aste — Supreme House'; pages.immobili.title='Immobili, Aste e Opportunità'; home_order default con bnb visibile. 6 quartieri + 6 poli già a default da iteration_7. Per futuri test, usare lo stesso pattern: cabina-tab-{theme,home,navbar,footer,pages,media,region}, salvare con *-save, reload pubblico per verificare.",
+  "rca of the issue": "N/A — nessun bug trovato in FASE 4."
+}
