@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Rocket, Map, Settings2, Crown, UserCog, Mail, DatabaseBackup, HelpCircle, FileText, Plug, ArrowLeft, LogOut, Palette } from "lucide-react";
+import { Rocket, Map, Settings2, Crown, UserCog, Mail, DatabaseBackup, HelpCircle, FileText, Plug, ArrowLeft, LogOut, Palette, LayoutGrid, Menu, PanelBottom } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 import { HypeSection } from "@/components/dashboard/HypeSection";
@@ -11,6 +11,8 @@ import { UsersSection } from "@/components/dashboard/UsersSection";
 import { BackupSection, NewsletterSection } from "@/components/dashboard/AdminExtraSections";
 import { FaqSection, SettingsSection, ConfigSection } from "@/components/dashboard/ContentSections";
 import { ThemeSection } from "@/components/dashboard/ThemeSection";
+import { HomeEditorSection } from "@/components/dashboard/HomeEditor";
+import { NavbarSection, FooterSection } from "@/components/dashboard/LayoutSections";
 
 export default function CabinaRegia() {
   const { user, loading, logout } = useAuth();
@@ -28,6 +30,9 @@ export default function CabinaRegia() {
       { id: "theme", label: "Aspetto & Tema", icon: Palette },
     ]},
     { title: "Contenuti & Editoriale", items: [
+      { id: "home", label: "Sezioni Home", icon: LayoutGrid },
+      { id: "navbar", label: "Menu & Logo", icon: Menu },
+      { id: "footer", label: "Footer & Contatti", icon: PanelBottom },
       { id: "settings", label: "Contenuti Sito", icon: FileText },
       { id: "site", label: "Ticker · Statistiche · Servizi · Bacheca", icon: Settings2 },
       { id: "faq", label: "FAQ", icon: HelpCircle },
@@ -47,6 +52,7 @@ export default function CabinaRegia() {
 
   const Section = {
     theme: ThemeSection,
+    home: HomeEditorSection, navbar: NavbarSection, footer: FooterSection,
     settings: SettingsSection, site: SiteSection, faq: FaqSection, region: RegionSection,
     hype: HypeSection, vip: VipSection, newsletter: NewsletterSection,
     config: ConfigSection, users: UsersSection, backup: BackupSection,

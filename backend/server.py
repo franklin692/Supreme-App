@@ -67,6 +67,24 @@ def clean(doc: dict) -> dict:
     return doc
 
 
+def deep_fill(defaults, existing):
+    """Return `existing` with any keys missing from `defaults` filled in (recursive for dicts).
+    Lists and scalar values present in `existing` are kept as-is."""
+    if existing is None:
+        import copy as _copy
+        return _copy.deepcopy(defaults)
+    if isinstance(defaults, dict) and isinstance(existing, dict):
+        out = dict(existing)
+        for k, v in defaults.items():
+            if k not in out:
+                import copy as _copy
+                out[k] = _copy.deepcopy(v)
+            else:
+                out[k] = deep_fill(v, out[k])
+        return out
+    return existing
+
+
 async def get_current_user(request: Request) -> dict:
     auth = request.headers.get("Authorization", "")
     token = auth[7:] if auth.startswith("Bearer ") else None
@@ -752,14 +770,27 @@ async def seed():
     if existing_settings is None:
         await db.settings.insert_one(dict(SEED_SETTINGS))
     else:
-        # Non-destructive backfill: add any missing default keys, merge theme defaults.
+        # Non-destructive backfill: add missing default keys, deep-merge nested blocks.
         updates = {}
         for k, v in SEED_SETTINGS.items():
-            if k in ("id", "theme"):
+            if k in ("id", "theme", "navbar", "footer", "home"):
                 continue
             if k not in existing_settings:
                 updates[k] = v
         updates["theme"] = {**SEED_SETTINGS["theme"], **(existing_settings.get("theme") or {})}
+        updates["navbar"] = deep_fill(SEED_SETTINGS["navbar"], existing_settings.get("navbar"))
+        updates["footer"] = deep_fill(SEED_SETTINGS["footer"], existing_settings.get("footer"))
+        if "home" in existing_settings:
+            updates["home"] = deep_fill(SEED_SETTINGS["home"], existing_settings["home"])
+        else:
+            # First migration: seed home + carry over any previously edited top-level hero text.
+            import copy as _copy
+            home = _copy.deepcopy(SEED_SETTINGS["home"])
+            for src, dst in [("hero_eyebrow", "eyebrow"), ("hero_title", "title"), ("hero_title_accent", "title_accent"),
+                             ("hero_subtitle", "subtitle"), ("hero_card_top", "card_top"), ("hero_card_bottom", "card_bottom")]:
+                if existing_settings.get(src):
+                    home["sections"]["hero"][dst] = existing_settings[src]
+            updates["home"] = home
         await db.settings.update_one({"id": "site"}, {"$set": updates})
 
 

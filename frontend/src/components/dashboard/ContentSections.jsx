@@ -55,8 +55,6 @@ export const FaqSection = () => {
 /* ---------------- Settings / Contenuti ---------------- */
 const FIELDS = [
   ["brand_name", "Nome Brand"], ["brand_tagline", "Sottotitolo Brand"],
-  ["hero_eyebrow", "Hero · Eyebrow"], ["hero_title", "Hero · Titolo"], ["hero_title_accent", "Hero · Titolo accento"],
-  ["hero_subtitle", "Hero · Sottotitolo", true], ["hero_card_top", "Hero · Card (riga 1)"], ["hero_card_bottom", "Hero · Card (riga 2)"],
   ["agency_phone", "Telefono agenzia"], ["agency_whatsapp", "WhatsApp agenzia"], ["footer_desc", "Footer · Descrizione", true],
 ];
 export const SettingsSection = () => {
