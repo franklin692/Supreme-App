@@ -74,4 +74,13 @@ Obiettivo utente: rendere gestibile dalla Cabina di Regia TUTTO il sito (contenu
 ### FASE 1 — COMPLETATA (2026-10-18)
 - Backend: `settings.theme` (12 campi) con backfill non distruttivo su doc esistente; GET /content/settings, PUT /admin/settings ($set merge).
 - Frontend: variabili CSS `--sh-*` in index.css consumate da body/.metallic/.btn-dark/.text-gold-gradient/.glass/radius; tailwind gold/amber/emerald = var(--sh-*). `ThemeInjector` applica il tema da DB su documentElement. Pannello Cabina "Aspetto & Tema" (`ThemeSection`): color picker, font titoli/testo, slider raggio, palette rapide, anteprima live, salva/ripristina; cleanup su unmount.
-- Test: iteration_5.json — frontend 100%, persistenza E2E verificata (modifica→salva→reload Home riflette il colore; reset ai default confermato).
+- Test: iteration_5.json — frontend 100%, persistenza E2E verificata.
+
+### FASE 2 — COMPLETATA (2026-10-18)
+- Backend: `settings.navbar`, `settings.footer`, `settings.home` (order + sections con visible + testi/liste/card) con deep_fill backfill non distruttivo + migrazione testo hero dai vecchi campi top-level.
+- Frontend pubblico ora DINAMICO dal DB:
+  - `Navbar.jsx`: brand, tagline, logo (lettera/immagine), voci menu (label/visibilità/ordine).
+  - `Layout.jsx` Footer: descrizione, 2 colonne (titolo+voci), contatti (telefono/WhatsApp/email/indirizzo), social, copyright.
+  - `Hub.jsx`: render 100% dinamico delle 10 sezioni da `settings.home` (ordine + visibilità + tutti i testi, badge hero, immagine hero, card B&B, card network).
+- Editor Cabina nuovi: `HomeEditor` (Sezioni Home: reorder ↑↓, on/off, testi, liste, card), `LayoutSections` (Menu & Logo, Footer & Contatti). "Contenuti Sito" ripulito dai campi hero (ora in Sezioni Home).
+- Test: iteration_6.json — frontend 100%, persistenza E2E verificata su Home/Navbar/Footer; default ripristinati.
