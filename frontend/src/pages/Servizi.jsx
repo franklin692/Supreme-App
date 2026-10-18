@@ -4,15 +4,20 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { api } from "@/lib/api";
 import { SectionTitle } from "@/components/common/Primitives";
+import { Seo } from "@/components/common/Seo";
 import { serviceIcon } from "@/lib/icons";
 
 export default function Servizi() {
   const { data: services = [] } = useQuery({ queryKey: ["services"], queryFn: async () => (await api.get("/services")).data });
+  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: async () => (await api.get("/content/settings")).data });
+  const pg = settings?.pages?.servizi || {};
+  const seo = settings?.seo?.pages?.servizi || {};
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-8 py-10 lg:py-14">
-      <SectionTitle eyebrow="Hub Multiservizi" title="I Servizi Supreme House"
-        subtitle="Un unico interlocutore per l'intero ciclo di vita del tuo immobile: dalla valorizzazione alla gestione, dalle aste agli adempimenti." />
+      <Seo title={seo.title} description={seo.description} />
+      <SectionTitle eyebrow={pg.eyebrow || "Hub Multiservizi"} title={pg.title || "I Servizi Supreme House"}
+        subtitle={pg.subtitle || "Un unico interlocutore per l'intero ciclo di vita del tuo immobile: dalla valorizzazione alla gestione, dalle aste agli adempimenti."} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((s, i) => {

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Map as MapIcon, SlidersHorizontal, X } from "lucide-react";
 import { api } from "@/lib/api";
 import { SectionTitle } from "@/components/common/Primitives";
+import { Seo } from "@/components/common/Seo";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { DarkMap } from "@/components/property/DarkMap";
 import { cn } from "@/lib/utils";
@@ -21,7 +22,10 @@ export default function Immobili() {
 
   const { data: props = [] } = useQuery({ queryKey: ["properties"], queryFn: async () => (await api.get("/properties")).data });
   const { data: home } = useQuery({ queryKey: ["home"], queryFn: async () => (await api.get("/content/home")).data });
+  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: async () => (await api.get("/content/settings")).data });
   const neighborhoods = home?.neighborhoods || [];
+  const pg = settings?.pages?.immobili || {};
+  const seo = settings?.seo?.pages?.immobili || {};
 
   const filtered = props
     .filter((p) => {
@@ -38,8 +42,9 @@ export default function Immobili() {
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-8 py-10 lg:py-14">
-      <SectionTitle eyebrow="Catalogo & Mappa" title="Immobili, Aste e Opportunità"
-        subtitle="Esplora gli immobili sulla mappa dei quartieri di Potenza o nel catalogo filtrabile." />
+      <Seo title={seo.title} description={seo.description} />
+      <SectionTitle eyebrow={pg.eyebrow || "Catalogo & Mappa"} title={pg.title || "Immobili, Aste e Opportunità"}
+        subtitle={pg.subtitle || "Esplora gli immobili sulla mappa dei quartieri di Potenza o nel catalogo filtrabile."} />
 
       {/* Map banner */}
       <button data-testid="open-map-btn" onClick={() => setMapOpen((v) => !v)}

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Plus, TrendingUp } from "lucide-react";
 import { api } from "@/lib/api";
 import { SectionTitle } from "@/components/common/Primitives";
+import { Seo } from "@/components/common/Seo";
 import { BuyerRequestCard } from "@/components/common/BuyerRequestCard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -12,12 +13,16 @@ import { CheckCircle2 } from "lucide-react";
 
 export default function ChiCerca() {
   const { data: requests = [] } = useQuery({ queryKey: ["buyer-requests"], queryFn: async () => (await api.get("/buyer-requests")).data });
+  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: async () => (await api.get("/content/settings")).data });
+  const pg = settings?.pages?.chi_cerca || {};
+  const seo = settings?.seo?.pages?.chi_cerca || {};
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-8 py-10 lg:py-14">
+      <Seo title={seo.title} description={seo.description} />
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
-        <SectionTitle eyebrow="Borsa Acquirenti · Mercato Rovesciato" title="Richieste Attive & Investitori in Attesa"
-          subtitle="Clienti verificati pronti all'acquisto o alla locazione. Qui sono gli immobili a cercare i proprietari."
+        <SectionTitle eyebrow={pg.eyebrow || "Borsa Acquirenti · Mercato Rovesciato"} title={pg.title || "Richieste Attive & Investitori in Attesa"}
+          subtitle={pg.subtitle || "Clienti verificati pronti all'acquisto o alla locazione. Qui sono gli immobili a cercare i proprietari."}
           className="mb-0" />
         <InsertRequestDialog />
       </div>

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { MediaUpload } from "@/components/common/MediaUpload";
 import { toast } from "sonner";
 
 const TYPES = ["vendita", "affitto", "asta", "offmarket", "conclusa"];
@@ -17,7 +18,7 @@ const blank = {
   lat: 40.6418, lng: 15.8086, mq: "", rooms: "", bathrooms: "", floor: "", energy_class: "C",
   condo_fee: "", heating: "Termoautonomo", garage: "", elevator: true, rendita_stimata: "",
   advisor_note: "", status_badges: "", photos: "", before_photo: "", after_photo: "", floorplan_photo: "",
-  concluded_badge: "", rendimento: "", pre_verified: true,
+  concluded_badge: "", rendimento: "", pre_verified: true, seo_title: "", seo_description: "",
   distances: { ospedale: "", unibas: "", scale_mobili: "", gallitello: "" },
 };
 
@@ -135,14 +136,28 @@ const PropertyForm = ({ initial, onClose, onDone }) => {
             <Field label="M Scale Mobili"><Input value={f.distances.scale_mobili} onChange={(e) => setD("scale_mobili", e.target.value)} className={inp} /></Field>
             <Field label="Min Gallitello"><Input value={f.distances.gallitello} onChange={(e) => setD("gallitello", e.target.value)} className={inp} /></Field>
           </div>
-          <Field label="Foto (URL separati da virgola)" className="sm:col-span-2"><Textarea data-testid="pf-photos" value={f.photos} onChange={(e) => set("photos", e.target.value)} className={inp + " min-h-[52px]"} /></Field>
-          <Field label="Foto STATO ATTUALE (before)"><Input value={f.before_photo} onChange={(e) => set("before_photo", e.target.value)} className={inp} /></Field>
-          <Field label="Foto RISTRUTTURATO (after)"><Input value={f.after_photo} onChange={(e) => set("after_photo", e.target.value)} className={inp} /></Field>
+          <Field label="Foto (URL separati da virgola)" className="sm:col-span-2">
+            <Textarea data-testid="pf-photos" value={f.photos} onChange={(e) => set("photos", e.target.value)} className={inp + " min-h-[52px]"} />
+            <div className="flex items-center gap-2 mt-2">
+              <MediaUpload testId="pf-photo-upload" label="Carica foto" onUploaded={(url) => set("photos", f.photos ? `${f.photos}, ${url}` : url)} />
+              <span className="text-[11px] text-neutral-400">la foto caricata viene aggiunta in fondo all'elenco</span>
+            </div>
+          </Field>
+          <Field label="Foto STATO ATTUALE (before)">
+            <Input value={f.before_photo} onChange={(e) => set("before_photo", e.target.value)} className={inp} />
+            <div className="mt-1"><MediaUpload testId="pf-before-upload" label="Carica" onUploaded={(url) => set("before_photo", url)} /></div>
+          </Field>
+          <Field label="Foto RISTRUTTURATO (after)">
+            <Input value={f.after_photo} onChange={(e) => set("after_photo", e.target.value)} className={inp} />
+            <div className="mt-1"><MediaUpload testId="pf-after-upload" label="Carica" onUploaded={(url) => set("after_photo", url)} /></div>
+          </Field>
           <Field label="Planimetria (URL da sfocare)" className="sm:col-span-2"><Input value={f.floorplan_photo} onChange={(e) => set("floorplan_photo", e.target.value)} className={inp} /></Field>
           <Field label="Bollini Status (separati da |)" className="sm:col-span-2"><Input data-testid="pf-badges" value={f.status_badges} onChange={(e) => set("status_badges", e.target.value)} className={inp} placeholder="🔥 IL PIÙ VISTO | 💎 ESCLUSIVA" /></Field>
           <Field label="Bollino Operazione Conclusa"><Input value={f.concluded_badge} onChange={(e) => set("concluded_badge", e.target.value)} className={inp} placeholder="✔️ VENDUTO IN 18 GIORNI" /></Field>
           <Field label="Rendimento (off-market)"><Input value={f.rendimento} onChange={(e) => set("rendimento", e.target.value)} className={inp} /></Field>
           <Field label="Nota dell'Advisor" className="sm:col-span-2"><Textarea data-testid="pf-note" value={f.advisor_note} onChange={(e) => set("advisor_note", e.target.value)} className={inp + " min-h-[70px]"} /></Field>
+          <Field label="SEO · Titolo (opzionale)" className="sm:col-span-2"><Input data-testid="pf-seo-title" value={f.seo_title} onChange={(e) => set("seo_title", e.target.value)} className={inp} placeholder="Titolo per Google (altrimenti usa il titolo annuncio)" /></Field>
+          <Field label="SEO · Descrizione (opzionale)" className="sm:col-span-2"><Textarea data-testid="pf-seo-desc" value={f.seo_description} onChange={(e) => set("seo_description", e.target.value)} className={inp + " min-h-[60px]"} placeholder="Descrizione per Google / anteprima social" /></Field>
           <div className="flex items-center gap-2"><Switch checked={f.pre_verified} onCheckedChange={(v) => set("pre_verified", v)} data-testid="pf-verified" /><span className="text-sm text-neutral-600">Scudo Pre-Verificato</span></div>
           <div className="flex items-center gap-2"><Switch checked={f.elevator} onCheckedChange={(v) => set("elevator", v)} /><span className="text-sm text-neutral-600">Ascensore</span></div>
         </div>

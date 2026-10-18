@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { api, currentMonthLabel } from "@/lib/api";
 import { SectionTitle, StatusBadge } from "@/components/common/Primitives";
+import { Seo } from "@/components/common/Seo";
 import { AnimatedCounter } from "@/components/common/AnimatedCounter";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { BuyerRequestCard } from "@/components/common/BuyerRequestCard";
@@ -29,6 +30,7 @@ export default function Hub() {
   const visible = (id) => (S[id] ? S[id].visible !== false : true);
   const d = data || {};
   const month = currentMonthLabel();
+  const seo = settings?.seo?.pages?.home || {};
 
   const renderers = {
     hero: () => <Hero s={sec("hero")} />,
@@ -45,6 +47,7 @@ export default function Hub() {
 
   return (
     <div>
+      <Seo title={seo.title} description={seo.description} />
       {order.map((id) => (visible(id) && renderers[id] ? <React.Fragment key={id}>{renderers[id]()}</React.Fragment> : null))}
     </div>
   );

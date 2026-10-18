@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MediaUpload } from "@/components/common/MediaUpload";
 import { toast } from "sonner";
 
 const inp = "bg-white border-black/10 focus-visible:ring-gold text-sm";
@@ -56,7 +57,12 @@ export const NavbarSection = () => {
         <div><label className="text-[11px] text-neutral-500 mb-1 block">Nome Brand</label><Input data-testid="nav-brand" value={brand} onChange={(e) => setBrand(e.target.value)} className={inp} /></div>
         <div><label className="text-[11px] text-neutral-500 mb-1 block">Sottotitolo Brand</label><Input value={tagline} onChange={(e) => setTagline(e.target.value)} className={inp} /></div>
         <div><label className="text-[11px] text-neutral-500 mb-1 block">Lettera logo (se nessuna immagine)</label><Input value={nav.logo_letter} onChange={(e) => setNav({ ...nav, logo_letter: e.target.value.slice(0, 2) })} className={inp} /></div>
-        <div><label className="text-[11px] text-neutral-500 mb-1 block">Logo immagine (URL)</label><Input data-testid="nav-logo-image" value={nav.logo_image} onChange={(e) => setNav({ ...nav, logo_image: e.target.value })} className={inp} placeholder="https://..." /></div>
+        <div><label className="text-[11px] text-neutral-500 mb-1 block">Logo immagine (URL)</label>
+          <div className="flex gap-2">
+            <Input data-testid="nav-logo-image" value={nav.logo_image} onChange={(e) => setNav({ ...nav, logo_image: e.target.value })} className={inp + " flex-1"} placeholder="https://..." />
+            <MediaUpload testId="nav-logo-upload" label="Carica" onUploaded={(url) => setNav({ ...nav, logo_image: url })} />
+          </div>
+        </div>
       </div>
 
       <div className="glass-gold rounded-2xl p-5">

@@ -6,6 +6,8 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request
+from fastapi import UploadFile, File
+from fastapi.responses import Response
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field
@@ -15,6 +17,8 @@ import uuid
 import logging
 import bcrypt
 import jwt
+import asyncio
+import requests
 
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -716,6 +720,136 @@ async def delete_config(cid: str, user: dict = Depends(require_admin)):
     return {"ok": True}
 
 
+# ----------------------------- Object Storage (media uploads) -----------------------------
+STORAGE_BASE = (os.environ.get("INTEGRATION_PROXY_URL") or "").strip() or "https://integrations.emergentagent.com"
+STORAGE_URL = STORAGE_BASE.rstrip("/") + "/objstore/api/v1/storage"
+EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
+APP_NAME = "supreme-house"
+_storage_key = None
+
+MIME_TYPES = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
+              "gif": "image/gif", "webp": "image/webp", "svg": "image/svg+xml"}
+
+
+def init_storage(force: bool = False):
+    global _storage_key
+    if _storage_key and not force:
+        return _storage_key
+    resp = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
+    resp.raise_for_status()
+    _storage_key = resp.json()["storage_key"]
+    return _storage_key
+
+
+def _put_object(path: str, data: bytes, content_type: str) -> dict:
+    key = init_storage()
+    resp = requests.put(f"{STORAGE_URL}/objects/{path}",
+                        headers={"X-Storage-Key": key, "Content-Type": content_type},
+                        data=data, timeout=120)
+    if resp.status_code == 404:
+        key = init_storage(force=True)
+        resp = requests.put(f"{STORAGE_URL}/objects/{path}",
+                            headers={"X-Storage-Key": key, "Content-Type": content_type},
+                            data=data, timeout=120)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def _get_object(path: str):
+    key = init_storage()
+    resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
+    if resp.status_code == 404:
+        key = init_storage(force=True)
+        resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
+    resp.raise_for_status()
+    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+
+
+@api.post("/admin/media")
+async def upload_media(file: UploadFile = File(...), user: dict = Depends(require_staff)):
+    ext = (file.filename.rsplit(".", 1)[-1].lower() if "." in (file.filename or "") else "bin")
+    content_type = file.content_type or MIME_TYPES.get(ext, "application/octet-stream")
+    data = await file.read()
+    if len(data) > 15 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="File troppo grande (max 15MB)")
+    path = f"{APP_NAME}/media/{uuid.uuid4()}.{ext}"
+    try:
+        result = await asyncio.to_thread(_put_object, path, data, content_type)
+    except Exception as e:
+        logger.error(f"upload failed: {e}")
+        raise HTTPException(status_code=502, detail="Upload non riuscito")
+    mid = new_id()
+    doc = {"id": mid, "storage_path": result["path"], "filename": file.filename,
+           "content_type": content_type, "size": result.get("size", len(data)),
+           "is_deleted": False, "created_at": now_iso()}
+    await db.media.insert_one(dict(doc))
+    return {"id": mid, "url": f"/api/media/{mid}", "filename": file.filename}
+
+
+@api.get("/admin/media")
+async def list_media(user: dict = Depends(require_staff)):
+    items = await db.media.find({"is_deleted": {"$ne": True}}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    for it in items:
+        it["url"] = f"/api/media/{it['id']}"
+    return items
+
+
+@api.delete("/admin/media/{mid}")
+async def delete_media(mid: str, user: dict = Depends(require_staff)):
+    await db.media.update_one({"id": mid}, {"$set": {"is_deleted": True}})
+    return {"ok": True}
+
+
+@api.get("/media/{mid}")
+async def serve_media(mid: str):
+    record = await db.media.find_one({"id": mid, "is_deleted": {"$ne": True}}, {"_id": 0})
+    if not record:
+        raise HTTPException(status_code=404, detail="Media non trovato")
+    try:
+        data, content_type = await asyncio.to_thread(_get_object, record["storage_path"])
+    except Exception as e:
+        logger.error(f"serve media failed: {e}")
+        raise HTTPException(status_code=502, detail="Media non disponibile")
+    return Response(content=data, media_type=record.get("content_type", content_type),
+                    headers={"Cache-Control": "public, max-age=86400"})
+
+
+# ----------------------------- Admin: Neighborhoods & Poles CRUD -----------------------------
+@api.post("/admin/neighborhoods")
+async def create_neighborhood(body: Dict[str, Any], user: dict = Depends(require_admin)):
+    count = await db.neighborhoods.count_documents({})
+    body["id"] = new_id()
+    body.setdefault("position", count + 1)
+    body.setdefault("name", "Nuovo Quartiere")
+    body.setdefault("lat", 40.6418)
+    body.setdefault("lng", 15.8086)
+    await db.neighborhoods.insert_one(dict(body))
+    return clean(body)
+
+
+@api.delete("/admin/neighborhoods/{nid}")
+async def delete_neighborhood(nid: str, user: dict = Depends(require_admin)):
+    await db.neighborhoods.delete_one({"id": nid})
+    return {"ok": True}
+
+
+@api.post("/admin/poles")
+async def create_pole(body: Dict[str, Any], user: dict = Depends(require_admin)):
+    count = await db.poles.count_documents({})
+    body["id"] = new_id()
+    body.setdefault("order", count + 1)
+    body.setdefault("name", "Nuovo Polo")
+    body.setdefault("active", True)
+    await db.poles.insert_one(dict(body))
+    return clean(body)
+
+
+@api.delete("/admin/poles/{pid}")
+async def delete_pole(pid: str, user: dict = Depends(require_admin)):
+    await db.poles.delete_one({"id": pid})
+    return {"ok": True}
+
+
 # ----------------------------- Seed -----------------------------
 from seed_data import (
     SEED_PROPERTIES, SEED_NEIGHBORHOODS, SEED_POLES, SEED_STATS,
@@ -773,13 +907,15 @@ async def seed():
         # Non-destructive backfill: add missing default keys, deep-merge nested blocks.
         updates = {}
         for k, v in SEED_SETTINGS.items():
-            if k in ("id", "theme", "navbar", "footer", "home"):
+            if k in ("id", "theme", "navbar", "footer", "home", "pages", "seo"):
                 continue
             if k not in existing_settings:
                 updates[k] = v
         updates["theme"] = {**SEED_SETTINGS["theme"], **(existing_settings.get("theme") or {})}
         updates["navbar"] = deep_fill(SEED_SETTINGS["navbar"], existing_settings.get("navbar"))
         updates["footer"] = deep_fill(SEED_SETTINGS["footer"], existing_settings.get("footer"))
+        updates["pages"] = deep_fill(SEED_SETTINGS["pages"], existing_settings.get("pages"))
+        updates["seo"] = deep_fill(SEED_SETTINGS["seo"], existing_settings.get("seo"))
         if "home" in existing_settings:
             updates["home"] = deep_fill(SEED_SETTINGS["home"], existing_settings["home"])
         else:
@@ -798,6 +934,11 @@ async def seed():
 async def on_startup():
     await db.users.create_index("username", unique=True)
     await seed()
+    try:
+        await asyncio.to_thread(init_storage)
+        logger.info("Object storage initialized.")
+    except Exception as e:
+        logger.warning(f"storage init failed (uploads may be unavailable): {e}")
     logger.info("Supreme House API ready — data seeded.")
 
     # Write test credentials file for QA/fork agents

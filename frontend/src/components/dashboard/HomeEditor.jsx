@@ -4,6 +4,7 @@ import { LayoutGrid, Save, Plus, Trash2, ArrowUp, ArrowDown, Eye, EyeOff, Chevro
 import { api } from "@/lib/api";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { MediaUpload } from "@/components/common/MediaUpload";
 import { toast } from "sonner";
 
 const inp = "bg-white border-black/10 focus-visible:ring-gold text-sm";
@@ -115,6 +116,13 @@ export const HomeEditorSection = () => {
                       </div>
                     ))}
                   </div>
+
+                  {id === "hero" && (
+                    <div className="flex items-center gap-2">
+                      <MediaUpload testId="home-hero-image-upload" label="Carica immagine hero" onUploaded={(url) => setField(id, "image", url)} />
+                      <span className="text-[11px] text-neutral-400">imposta l'immagine di sfondo dell'hero</span>
+                    </div>
+                  )}
 
                   {(schema.strlist || []).map(([k, label]) => (
                     <StrList key={k} label={label} items={s[k] || []} onChange={(v) => setField(id, k, v)} testPrefix={`home-${id}-${k}`} />

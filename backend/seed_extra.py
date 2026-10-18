@@ -152,6 +152,31 @@ DEFAULT_HOME = {
     },
 }
 
+DEFAULT_PAGES = {
+    "immobili": {"eyebrow": "Catalogo & Mappa", "title": "Immobili, Aste e Opportunità",
+                 "subtitle": "Esplora gli immobili sulla mappa dei quartieri di Potenza o nel catalogo filtrabile."},
+    "servizi": {"eyebrow": "Hub Multiservizi", "title": "I Servizi Supreme House",
+                "subtitle": "Un unico interlocutore per l'intero ciclo di vita del tuo immobile: dalla valorizzazione alla gestione, dalle aste agli adempimenti."},
+    "chi_cerca": {"eyebrow": "Borsa Acquirenti · Mercato Rovesciato", "title": "Richieste Attive & Investitori in Attesa",
+                  "subtitle": "Clienti verificati pronti all'acquisto o alla locazione. Qui sono gli immobili a cercare i proprietari."},
+}
+
+DEFAULT_SEO = {
+    "site_title": "Supreme House — Immobiliare Potenza & Basilicata",
+    "default_description": "Hub immobiliare moderno: vendita, affitto, aste, property management e intermediazione a Potenza e in tutta la Basilicata.",
+    "og_image": "",
+    "pages": {
+        "home": {"title": "Supreme House — Casa, Investimenti e Property Management in Basilicata",
+                 "description": "Scopri immobili pre-verificati, aste e servizi immobiliari d'élite a Potenza e in Basilicata."},
+        "immobili": {"title": "Immobili & Aste — Supreme House",
+                     "description": "Catalogo immobili in vendita e affitto, aste giudiziarie e opportunità off-market a Potenza e in Basilicata."},
+        "servizi": {"title": "Servizi Immobiliari — Supreme House",
+                    "description": "Property management, valorizzazione, aste, off-market e adempimenti. Un unico interlocutore in Basilicata."},
+        "chi_cerca": {"title": "Chi Cerca Casa — Borsa Acquirenti Supreme House",
+                      "description": "Clienti e investitori verificati in cerca di immobili a Potenza e in Basilicata."},
+    },
+}
+
 SEED_SETTINGS = {
     "id": "site",
     "brand_name": "SUPREME HOUSE",
@@ -169,4 +194,6 @@ SEED_SETTINGS = {
     "navbar": DEFAULT_NAVBAR,
     "footer": DEFAULT_FOOTER,
     "home": DEFAULT_HOME,
+    "pages": DEFAULT_PAGES,
+    "seo": DEFAULT_SEO,
 }

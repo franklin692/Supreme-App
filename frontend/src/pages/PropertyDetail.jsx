@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { api, formatPrice, waLink } from "@/lib/api";
 import { StatusBadge } from "@/components/common/Primitives";
+import { Seo } from "@/components/common/Seo";
 import { LeadDialog } from "@/components/common/LeadDialog";
 import { BeforeAfterSlider } from "@/components/property/BeforeAfterSlider";
 import { DarkMap } from "@/components/property/DarkMap";
@@ -43,6 +44,7 @@ export default function PropertyDetail() {
 
   return (
     <div className="pb-28">
+      <Seo title={p.seo_title || `${p.title} — Supreme House`} description={p.seo_description || p.advisor_note || `${p.title} a ${p.neighborhood || ""}, ${p.city || "Basilicata"}.`} image={p.photos?.[0]} />
       {/* Gallery */}
       <div className="relative">
         <div className="relative h-72 sm:h-[460px] overflow-hidden">
