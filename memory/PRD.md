@@ -46,6 +46,14 @@ Build 1.0 completa della Web App + Piattaforma Gestionale per "SUPREME HOUSE": h
 - Newsletter: form nel footer + endpoint /api/newsletter + sezione admin elenco iscritti.
 - Testing agent iter2: backend 42 test PASS, frontend 100%, bug mappa confermato risolto.
 
+## Iterazione 3 (2026-10-18) — Modern minimal + Cabina di Regia potenziata
+- Restyle moderno/minimalista: font display Sora, palette avorio/oro/nero raffinata, card flat, bottoni solidi (metallic oro + btn-dark nero), rimossi riferimenti "private banking".
+- Sezione FAQ in Home (accordion) + CRUD FAQ dalla Cabina di Regia (backend /api/faq, /api/admin/faq).
+- Cabina di Regia SEPARATA: /dashboard (agenti: agenda, lead, immobili) con pulsante "Cabina di Regia" → /cabina-di-regia (solo admin) con sidebar a gruppi. Editabile praticamente tutto: Contenuti Sito (hero/brand/contatti/footer via /content/settings), Ticker/Statistiche/Servizi/Bacheca, FAQ, Quartieri&Poli, Hype, Link VIP, Newsletter, Utenti, Backup + INTEGRAZIONI/Config generiche (key-value) per aggiungere qualsiasi servizio in autonomia.
+- Mappa: scura + elegante tramite OpenStreetMap (key-free) con filtro CSS (CartoDB richiedeva API key). Click su immobile apre una mini-scheda popup (foto, prezzo, "Vedi annuncio") senza lasciare la mappa; zone quartieri con cerchi/etichette oro.
+- Registrazione: solo come Utente (altri ruoli creati dall'admin con credenziali dedicate).
+- Testing agent iter3: backend 52/52 PASS, frontend ok; fix mappa verificato (iter4): tile OSM senza watermark, popup funzionante.
+
 ## Backlog / Prossimi (P1/P2)
 - P1: Ricerca avanzata catalogo (prezzo/mq/locali), notifica email agente su nuovo lead (Resend), vista agenda settimanale drag&drop.
 - P2: Dossier PDF brandizzato per immobile, heatmap quartieri sulla mappa, salvataggio immobili preferiti lato utente reale, upload foto via object storage.

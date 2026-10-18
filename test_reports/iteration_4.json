@@ -1,0 +1,40 @@
+{
+  "summary": "Verified the DarkMap tile-provider fix on /immobili and property detail page. OpenStreetMap tiles load without any 'API KEY' watermark; dark CSS filter visible; popup card works; neighborhood circles present.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verifications": {
+    "immobili_map": {
+      "open_map_btn_opens_map": true,
+      "leaflet_tiles_loaded_count": 18,
+      "tile_src_sample": "https://b.tile.openstreetmap.org/13/4455/3082.png",
+      "api_key_text_present": false,
+      "markers_count": 7,
+      "circles_count": 6,
+      "tooltips_count": 6,
+      "popup_opens_on_marker_click": true,
+      "popup_contents_sample": "SH-PZ-318 / Appartamento 4 Vani — Asta Giudiziaria / Poggio Tre Galli / € 88.000 / Vedi annuncio",
+      "no_auto_navigation_on_marker_click": true
+    },
+    "property_detail_map": {
+      "url_tested": "/immobili/1662ce3b-3bf3-49fe-99bc-9bb2b5fab569",
+      "tiles_loaded_count": 15,
+      "tile_src_sample": "https://a.tile.openstreetmap.org/15/17821/12329.png",
+      "api_key_text_present": false,
+      "posizione_section_present": true
+    }
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped)", "frontend": "100%"},
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Map fix (CartoDB -> OSM + CSS dark filter) fully verified on list map and property detail map. No API KEY watermark anywhere. Popup card opens and does not auto-navigate; Vedi annuncio link available.",
+  "rca of the issue": "Previously CartoDB dark_all tiles returned key-gated placeholder images with 'API KEY REQUIRED' watermark. Fix switched TileLayer URL to OpenStreetMap standard tiles (key-free) and applied a CSS filter (.leaflet-tile invert+hue-rotate+brightness/contrast/saturate) to retain dark aesthetic. Verified by inspecting tile img src (openstreetmap.org domain) and body text (no 'API KEY' occurrences)."
+}
