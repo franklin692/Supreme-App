@@ -28,8 +28,8 @@ const Footer = () => (
       <div className="md:col-span-2">
         <div className="font-display text-2xl text-gold-gradient font-bold tracking-tight">SUPREME HOUSE</div>
         <p className="text-sm text-muted-foreground mt-3 max-w-md leading-relaxed">
-          Private Banking del Real Estate. Hub di servizi immobiliari, property management, aste e
-          intermediazione d'élite. Sede centrale a Potenza, operatività in tutta la Basilicata.
+          Immobiliare di nuova generazione. Hub di servizi immobiliari, property management, aste e
+          intermediazione. Sede a Potenza, operatività in tutta la Basilicata.
         </p>
       </div>
       <div>

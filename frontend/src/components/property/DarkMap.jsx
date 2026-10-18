@@ -1,5 +1,5 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Circle, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import { useNavigate } from "react-router-dom";
 import { formatPrice } from "@/lib/api";
@@ -7,36 +7,55 @@ import { formatPrice } from "@/lib/api";
 const goldIcon = L.divIcon({
   className: "",
   html: '<div class="gold-pin"></div>',
-  iconSize: [26, 26],
-  iconAnchor: [13, 26],
-  popupAnchor: [0, -24],
+  iconSize: [24, 24],
+  iconAnchor: [12, 24],
+  popupAnchor: [0, -22],
 });
 
-export const DarkMap = ({ markers = [], center = [40.6418, 15.8086], zoom = 13, height = "420px", neighborhoods = [], clickable = true }) => {
+const MiniCard = ({ m }) => {
   const navigate = useNavigate();
   return (
-    <div className="rounded-2xl overflow-hidden border border-gold/25 gold-glow" style={{ height }} data-testid="dark-map">
+    <div style={{ width: 240 }}>
+      {m.photos?.[0] && <img src={m.photos[0]} alt={m.title} style={{ width: "100%", height: 120, objectFit: "cover" }} />}
+      <div style={{ padding: "12px 14px 14px" }}>
+        <div style={{ fontSize: 10, fontFamily: "monospace", color: "#B5934E", letterSpacing: 1 }}>{m.ref_code}</div>
+        <div style={{ fontWeight: 700, fontSize: 15, color: "#f3f1ea", lineHeight: 1.2, marginTop: 2 }}>{m.title}</div>
+        <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 2 }}>{m.neighborhood}</div>
+        <div style={{ fontFamily: "monospace", fontWeight: 700, color: "#E6D5A9", fontSize: 17, marginTop: 6 }}>{formatPrice(m.price, m.price_period)}</div>
+        {m.id && (
+          <button onClick={() => navigate(`/immobili/${m.id}`)}
+            style={{ marginTop: 10, width: "100%", padding: "9px 0", borderRadius: 999, border: "none", background: "#BE9E5E", color: "#1A160C", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+            Vedi annuncio →
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const DarkMap = ({ markers = [], center = [40.6418, 15.8086], zoom = 13, height = "420px", neighborhoods = [], clickable = true }) => {
+  return (
+    <div className="rounded-2xl overflow-hidden" style={{ height, border: "1px solid rgba(181,147,78,0.3)" }} data-testid="dark-map">
       <MapContainer center={center} zoom={zoom} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false}>
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; OpenStreetMap contributors'
+          url="https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; OpenStreetMap &copy; CARTO'
         />
-        {neighborhoods.map((n, i) => (
-          <Circle key={`c-${i}`} center={[n.lat, n.lng]} radius={520}
-            pathOptions={{ color: "#D4AF37", weight: 1, fillColor: "#D4AF37", fillOpacity: 0.08 }}>
-            <Popup><strong style={{ color: "#D4AF37" }}>{n.name}</strong><br />Indice richiesta {n.demand_index}/100</Popup>
+        {neighborhoods.filter((n) => n.lat).map((n, i) => (
+          <Circle key={`c-${i}`} center={[n.lat, n.lng]} radius={560}
+            pathOptions={{ color: "#B5934E", weight: 1.5, opacity: 0.85, fillColor: "#B5934E", fillOpacity: 0.12 }}>
+            <Tooltip permanent direction="center" className="neigh-label">
+              <span style={{ color: "#E6D5A9", fontWeight: 700, fontSize: 11 }}>{n.name}</span>
+            </Tooltip>
           </Circle>
         ))}
-        {markers.map((m, i) => (
-          <Marker key={i} position={[m.lat, m.lng]} icon={goldIcon}
-            eventHandlers={clickable && m.id ? { click: () => navigate(`/immobili/${m.id}`) } : {}}>
-            <Popup>
-              <div style={{ minWidth: 150 }}>
-                <strong style={{ color: "#D4AF37" }}>{m.title}</strong>
-                <div style={{ fontSize: 12, color: "#9CA3AF" }}>{m.neighborhood}</div>
-                <div style={{ fontFamily: "monospace", color: "#10B981", marginTop: 4 }}>{formatPrice(m.price, m.price_period)}</div>
-              </div>
-            </Popup>
+        {markers.filter((m) => m.lat).map((m, i) => (
+          <Marker key={i} position={[m.lat, m.lng]} icon={goldIcon}>
+            {clickable && m.id ? (
+              <Popup><MiniCard m={m} /></Popup>
+            ) : (
+              <Popup><div style={{ padding: 12, color: "#f3f1ea", width: 180 }}><strong style={{ color: "#B5934E" }}>{m.title}</strong><div style={{ fontSize: 12, color: "#9ca3af" }}>{m.neighborhood}</div></div></Popup>
+            )}
           </Marker>
         ))}
       </MapContainer>

@@ -28,7 +28,7 @@ export const TopNav = () => {
           <div className="w-9 h-9 rounded-md metallic flex items-center justify-center font-display font-black text-lg">S</div>
           <div className="leading-none">
             <div className="font-display text-xl font-bold text-gold-gradient tracking-tight">SUPREME HOUSE</div>
-            <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-0.5">Private Banking del Real Estate</div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-0.5">Real Estate · Basilicata</div>
           </div>
         </Link>
         <nav className="flex items-center gap-1">

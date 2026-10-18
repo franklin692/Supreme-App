@@ -129,15 +129,9 @@ export default function Accedi() {
             <Input data-testid="reg-name" placeholder="Nome e Cognome" value={reg.name} onChange={(e) => setReg({ ...reg, name: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
             <Input data-testid="reg-username" placeholder="Username" value={reg.username} onChange={(e) => setReg({ ...reg, username: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
             <Input data-testid="reg-password" type="password" placeholder="Password" value={reg.password} onChange={(e) => setReg({ ...reg, password: e.target.value })} className="bg-white border-gold/20 focus-visible:ring-gold" />
-            <Select value={reg.role} onValueChange={(v) => setReg({ ...reg, role: v })}>
-              <SelectTrigger data-testid="reg-role" className="bg-white border-gold/20 focus:ring-gold"><SelectValue /></SelectTrigger>
-              <SelectContent className="glass-gold border-gold/30">
-                <SelectItem value="user">Utente / Acquirente</SelectItem>
-                <SelectItem value="bnb_owner">Proprietario B&B / Immobile</SelectItem>
-                <SelectItem value="condomino">Condòmino</SelectItem>
-                <SelectItem value="collaborator">Collaboratore / Segnalatore</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="rounded-xl bg-[#F1EDE3] border border-black/5 px-4 py-3 text-xs text-neutral-600">
+              Ti registri come <span className="font-semibold text-neutral-900">Utente / Acquirente</span>. Gli accessi per Proprietari B&B, Condòmini e Collaboratori vengono creati dall'amministrazione con credenziali dedicate.
+            </div>
             <button type="submit" disabled={loading} data-testid="reg-submit" className="w-full py-3 rounded-full metallic font-semibold hover:brightness-110 transition-all duration-300 disabled:opacity-60">
               {loading ? "Registrazione..." : "Crea il tuo profilo"}
             </button>

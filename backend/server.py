@@ -567,7 +567,8 @@ async def admin_update_user(uid: str, body: Dict[str, Any], user: dict = Depends
 
 
 BACKUP_COLLECTIONS = ["properties", "neighborhoods", "poles", "stats", "ticker",
-                      "services", "buyer_requests", "appointments", "leads", "vip_links", "newsletter"]
+                      "services", "buyer_requests", "appointments", "leads", "vip_links",
+                      "newsletter", "faq", "settings", "site_config"]
 
 
 @api.get("/admin/backup/export")
@@ -620,12 +621,91 @@ async def newsletter_delete(nid: str, user: dict = Depends(require_admin)):
     return {"ok": True}
 
 
+# ----------------------------- FAQ -----------------------------
+@api.get("/faq")
+async def list_faq():
+    return await db.faq.find({"active": True}, {"_id": 0}).sort("order", 1).to_list(100)
+
+
+@api.get("/admin/faq")
+async def admin_faq(user: dict = Depends(require_admin)):
+    return await db.faq.find({}, {"_id": 0}).sort("order", 1).to_list(100)
+
+
+@api.post("/admin/faq")
+async def create_faq(body: Dict[str, Any], user: dict = Depends(require_admin)):
+    count = await db.faq.count_documents({})
+    body["id"] = new_id()
+    body.setdefault("order", count + 1)
+    body.setdefault("active", True)
+    await db.faq.insert_one(dict(body))
+    return clean(body)
+
+
+@api.put("/admin/faq/{fid}")
+async def update_faq(fid: str, body: Dict[str, Any], user: dict = Depends(require_admin)):
+    body.pop("id", None); body.pop("_id", None)
+    await db.faq.update_one({"id": fid}, {"$set": body})
+    return clean(await db.faq.find_one({"id": fid}, {"_id": 0}))
+
+
+@api.delete("/admin/faq/{fid}")
+async def delete_faq(fid: str, user: dict = Depends(require_admin)):
+    await db.faq.delete_one({"id": fid})
+    return {"ok": True}
+
+
+# ----------------------------- Site Settings (editable content) -----------------------------
+@api.get("/content/settings")
+async def get_settings():
+    s = await db.settings.find_one({"id": "site"}, {"_id": 0})
+    return s or {}
+
+
+@api.put("/admin/settings")
+async def update_settings(body: Dict[str, Any], user: dict = Depends(require_admin)):
+    body.pop("_id", None)
+    body["id"] = "site"
+    await db.settings.update_one({"id": "site"}, {"$set": body}, upsert=True)
+    return clean(await db.settings.find_one({"id": "site"}, {"_id": 0}))
+
+
+# ----------------------------- Integrations / generic config (admin autonomy) -----------------------------
+@api.get("/admin/config")
+async def get_config(user: dict = Depends(require_admin)):
+    return await db.site_config.find({}, {"_id": 0}).sort("created_at", 1).to_list(500)
+
+
+@api.post("/admin/config")
+async def create_config(body: Dict[str, Any], user: dict = Depends(require_admin)):
+    doc = {"id": new_id(), "label": body.get("label", ""), "key": body.get("key", ""),
+           "value": body.get("value", ""), "category": body.get("category", "Integrazione"),
+           "enabled": bool(body.get("enabled", True)), "created_at": now_iso()}
+    await db.site_config.insert_one(dict(doc))
+    return doc
+
+
+@api.put("/admin/config/{cid}")
+async def update_config(cid: str, body: Dict[str, Any], user: dict = Depends(require_admin)):
+    body.pop("id", None); body.pop("_id", None)
+    await db.site_config.update_one({"id": cid}, {"$set": body})
+    return clean(await db.site_config.find_one({"id": cid}, {"_id": 0}))
+
+
+@api.delete("/admin/config/{cid}")
+async def delete_config(cid: str, user: dict = Depends(require_admin)):
+    await db.site_config.delete_one({"id": cid})
+    return {"ok": True}
+
+
 # ----------------------------- Seed -----------------------------
 from seed_data import (
     SEED_PROPERTIES, SEED_NEIGHBORHOODS, SEED_POLES, SEED_STATS,
     SEED_TICKER, SEED_SERVICES, SEED_BUYER_REQUESTS, SEED_APPOINTMENTS,
     SEED_LEADS, build_demo_users,
 )
+from seed_extra import SEED_FAQ, SEED_SETTINGS
+import uuid as _uuid
 
 
 async def seed():
@@ -664,6 +744,12 @@ async def seed():
 
     if await db.ticker.count_documents({}) == 0:
         await db.ticker.insert_one(dict(SEED_TICKER))
+
+    if await db.faq.count_documents({}) == 0:
+        await db.faq.insert_many([{**dict(f), "id": str(_uuid.uuid4())} for f in SEED_FAQ])
+
+    if await db.settings.count_documents({}) == 0:
+        await db.settings.insert_one(dict(SEED_SETTINGS))
 
 
 @app.on_event("startup")

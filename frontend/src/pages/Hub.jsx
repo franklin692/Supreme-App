@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useInView } from "framer-motion";
 import {
   Flame, TrendingUp, ArrowRight, Sparkles, MapPin, Rocket,
-  Gift, Briefcase, Handshake, Trophy, CheckCircle2, ChevronRight,
+  Gift, Briefcase, Handshake, Trophy, CheckCircle2, ChevronRight, ChevronDown,
 } from "lucide-react";
 import { api, currentMonthLabel } from "@/lib/api";
 import { SectionTitle, StatusBadge } from "@/components/common/Primitives";
@@ -20,6 +20,9 @@ const HERO_IMG = "https://images.unsplash.com/photo-1611416457332-946853cc75d6?c
 
 export default function Hub() {
   const { data } = useQuery({ queryKey: ["home"], queryFn: async () => (await api.get("/content/home")).data });
+  const { data: settings } = useQuery({ queryKey: ["settings"], queryFn: async () => (await api.get("/content/settings")).data });
+  const { data: faqs = [] } = useQuery({ queryKey: ["faq"], queryFn: async () => (await api.get("/faq")).data });
+  const st = settings || {};
   const d = data || {};
   const featured = (d.featured || []);
   const month = currentMonthLabel();
@@ -35,19 +38,18 @@ export default function Hub() {
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 mb-6">
               <span className="h-px w-10 bg-gold" />
-              <span className="text-xs uppercase tracking-[0.35em] text-gold">Private Banking del Real Estate</span>
+              <span className="text-xs uppercase tracking-[0.3em] text-gold">{st.hero_eyebrow || "Immobiliare di nuova generazione"}</span>
             </div>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-neutral-900">
-              Il tuo patrimonio immobiliare,<br />
-              <span className="text-gold-gradient">gestito come un grande capitale.</span>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.02] text-neutral-900">
+              {st.hero_title || "Il modo moderno di vivere, vendere e gestire casa"}{" "}
+              <span className="text-gold-gradient">{st.hero_title_accent || "in Basilicata."}</span>
             </h1>
-            <div className="mt-8 inline-block rounded-2xl bg-[#141310] px-8 py-6 border border-gold/30 gold-glow">
-              <div className="text-white font-semibold tracking-[0.15em] text-xs sm:text-sm uppercase">Non ci limitiamo a vendere immobili.</div>
-              <div className="font-display text-3xl sm:text-4xl text-gold-gradient mt-1.5">Creiamo Valore.</div>
+            <div className="mt-8 inline-block rounded-2xl bg-[#16150F] px-7 py-5">
+              <div className="text-white/70 font-medium tracking-[0.12em] text-xs uppercase">{st.hero_card_top || "Non ci limitiamo a vendere immobili."}</div>
+              <div className="font-display text-2xl sm:text-3xl text-gold-gradient mt-1">{st.hero_card_bottom || "Creiamo Valore."}</div>
             </div>
             <p className="mt-6 text-lg text-neutral-600 leading-relaxed max-w-2xl">
-              Hub di servizi immobiliari, property management, aste e intermediazione d'élite.
-              Sede centrale a Potenza, consulenti a domicilio in tutta la Basilicata. Nessun ufficio da raggiungere: siamo noi a venire da te.
+              {st.hero_subtitle || "Hub di servizi immobiliari, property management, aste e intermediazione. Nessun ufficio da raggiungere: i nostri advisor vengono da te."}
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-4">
               <PrivateAdvisorDialog
@@ -266,6 +268,18 @@ export default function Hub() {
         </div>
       </section>
 
+      {/* ===== FAQ ===== */}
+      {faqs.length > 0 && (
+        <section className="py-16">
+          <div className="max-w-3xl mx-auto px-5 lg:px-8">
+            <SectionTitle eyebrow="Domande frequenti" title="Tutto quello che vuoi sapere" align="center" className="mx-auto text-center" />
+            <div className="space-y-3">
+              {faqs.map((f, i) => <FaqItem key={f.id} f={f} testId={`faq-${i}`} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ===== I) SEGNALA / LAVORA / COLLABORA ===== */}
       <section className="py-16 pb-24">
         <div className="max-w-7xl mx-auto px-5 lg:px-8">
@@ -299,8 +313,20 @@ export default function Hub() {
   );
 }
 
-const Metric = ({ label, value }) => (
-  <div>
+const FaqItem = ({ f, testId }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="glass-gold rounded-2xl overflow-hidden" data-testid={testId}>
+      <button onClick={() => setOpen((v) => !v)} className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left">
+        <span className="font-semibold text-neutral-900">{f.question}</span>
+        <ChevronDown size={18} className={`text-gold shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && <div className="px-5 pb-5 -mt-1 text-sm text-neutral-600 leading-relaxed">{f.answer}</div>}
+    </div>
+  );
+};
+
+const Metric = ({ label, value }) => (  <div>
     <div className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground">{label}</div>
     <div className="text-neutral-800 font-medium mt-0.5">{value}</div>
   </div>

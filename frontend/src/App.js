@@ -11,6 +11,7 @@ import Servizi from "@/pages/Servizi";
 import ServiceDetail from "@/pages/ServiceDetail";
 import Accedi from "@/pages/Accedi";
 import Dashboard from "@/pages/Dashboard";
+import CabinaRegia from "@/pages/CabinaRegia";
 import RolePanel from "@/pages/RolePanel";
 import VipPage from "@/pages/VipPage";
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/servizi/:id" element={<ServiceDetail />} />
             <Route path="/accedi" element={<Accedi />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/cabina-di-regia" element={<CabinaRegia />} />
             <Route path="/pannello" element={<RolePanel />} />
           </Route>
           <Route path="/vip/:token" element={<VipPage />} />
